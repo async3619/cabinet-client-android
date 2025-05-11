@@ -1,5 +1,8 @@
+import 'package:cabinet_client_android/routes/home/threads.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'attachments.dart';
 
 class HomeRoute extends StatefulWidget {
   const HomeRoute({super.key});
@@ -19,9 +22,21 @@ class _HomeRouteState extends State<HomeRoute> {
 
   @override
   Widget build(BuildContext context) {
+    Widget selectedTab;
+    switch (_selectedTabIndex) {
+      case 0:
+        selectedTab = ThreadsTab();
+        break;
+      case 1:
+        selectedTab = AttachmentsTab();
+        break;
+
+      default:
+        throw Exception('Invalid tab index: $_selectedTabIndex');
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Cabinet')),
-      body: const Center(child: Text('Home Page')),
+      body: selectedTab,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
