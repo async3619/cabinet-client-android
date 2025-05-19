@@ -1,5 +1,4 @@
 import 'package:cabinet_client_android/routes/home/threads.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'attachments.dart';

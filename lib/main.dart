@@ -1,11 +1,27 @@
 import 'package:cabinet_client_android/routes/home/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await initHiveForFlutter();
+
+  final HttpLink httpLink = HttpLink(
+    'https://cabinet-api.sophia-dev.io/graphql',
+  );
+
+  ValueNotifier<GraphQLClient> client = ValueNotifier(
+    GraphQLClient(
+      link: httpLink,
+      // The default store is the InMemoryStore, which does NOT persist to disk
+      cache: GraphQLCache(store: HiveStore()),
+    ),
+  );
+
+  runApp(GraphQLProvider(client: client, child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.

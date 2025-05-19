@@ -1,0 +1,50 @@
+fragment FullAttachment on Attachment {
+  id
+  uuid
+  name
+  width
+  height
+  size
+  extension
+  mime
+  isVideo
+  hash
+  timestamp
+  thumbnailWidth
+  thumbnailHeight
+  thumbnailFilePath
+  createdAt
+}
+
+fragment MinimalThread on Thread {
+  id
+  title
+  author
+  content
+  createdAt
+  attachmentCount
+
+  attachments {
+    ...FullAttachment
+  }
+
+  board {
+    id
+    code
+    title
+  }
+
+  _count {
+    posts
+    attachments
+  }
+}
+
+query WatcherThreadsQuery($id: Int!) {
+  watcher(where: { id: $id }) {
+    ...FullWatcher
+    threads(orderBy: { createdAt: desc }) {
+      ...MinimalThread
+    }
+  }
+}
