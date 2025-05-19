@@ -130,7 +130,19 @@ class _PostListState extends State<PostList> {
         widget.thread.title ?? "Thread #${widget.thread.id.split("::").last}";
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                postsFuture = fetchPostList();
+              });
+            },
+          ),
+        ],
+      ),
       body: FutureBuilder(
         future: postsFuture,
         builder: (context, snapshot) {
