@@ -40,7 +40,7 @@ class ThreadGridItem extends StatelessWidget {
                   size: 36,
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.75),
+                  ).colorScheme.onSurface.withValues(alpha: 0.75),
                 ),
               ),
             ),
