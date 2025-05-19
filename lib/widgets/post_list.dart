@@ -4,6 +4,7 @@ import 'package:cabinet_client_android/widgets/modal/media_viewer.dart';
 import 'package:cabinet_client_android/widgets/post_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class PostList extends StatefulWidget {
   final Fragment$MinimalThread thread;
@@ -16,6 +17,8 @@ class PostList extends StatefulWidget {
 }
 
 class _PostListState extends State<PostList> {
+  AutoScrollController? scrollController;
+
   List<Fragment$FullPost>? posts;
   List<Fragment$FullAttachment>? attachments;
 
@@ -32,6 +35,8 @@ class _PostListState extends State<PostList> {
 
       return posts;
     });
+
+    scrollController = AutoScrollController();
   }
 
   Future<List<Fragment$FullPost>> fetchPostList() async {
@@ -50,6 +55,32 @@ class _PostListState extends State<PostList> {
     }
 
     return data.thread!.posts!;
+  }
+
+  void handleMediaIndexChanged(int newIndex) {
+    var attachmentPostIndexMap = <int, int>{};
+    int attachmentIndex = 0;
+    for (var i = 0; i < posts!.length; i++) {
+      final attachments = posts![i].attachments;
+      if (attachments == null) {
+        continue;
+      }
+
+      for (var j = 0; j < attachments.length; j++) {
+        attachmentPostIndexMap[attachmentIndex] = i;
+        attachmentIndex++;
+      }
+    }
+
+    final postIndex = attachmentPostIndexMap[newIndex];
+    if (postIndex == null) {
+      throw Exception("Post index not found");
+    }
+
+    scrollController!.scrollToIndex(
+      postIndex,
+      preferPosition: AutoScrollPosition.begin,
+    );
   }
 
   void handleShowAttachment(
@@ -88,6 +119,7 @@ class _PostListState extends State<PostList> {
       MediaViewerModal(
         attachments: allAttachments,
         currentIndex: attachmentIndexInAllPosts,
+        onIndexChanged: handleMediaIndexChanged,
       ),
     );
   }
@@ -115,12 +147,18 @@ class _PostListState extends State<PostList> {
           }
 
           return ListView.builder(
+            controller: scrollController,
             itemCount: posts!.length,
             itemBuilder: (context, index) {
               final post = posts![index];
-              return PostListItem(
-                post: post,
-                onShowAttachment: handleShowAttachment,
+              return AutoScrollTag(
+                key: ValueKey(index),
+                controller: scrollController!,
+                index: index,
+                child: PostListItem(
+                  post: post,
+                  onShowAttachment: handleShowAttachment,
+                ),
               );
             },
           );
