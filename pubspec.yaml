@@ -39,6 +39,9 @@ dependencies:
   flutter_hooks: ^0.20.5
   provider: ^6.1.5
   html: ^0.15.6
+  intl: ^0.20.2
+  filesize: ^2.0.1
+  flutter_html: ^3.0.0
 
 dev_dependencies:
   flutter_test:
