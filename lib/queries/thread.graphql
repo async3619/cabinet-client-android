@@ -1,0 +1,41 @@
+fragment FullPost on Post {
+  id
+  no
+  author
+  title
+  content
+  createdAt
+  board {
+    id
+    provider
+  }
+  attachments {
+    ...FullAttachment
+  }
+}
+
+fragment FullThread on Thread {
+  id
+  no
+  author
+  title
+  content
+  createdAt
+  attachments(orderBy: { createdAt: asc }) {
+    ...FullAttachment
+  }
+  posts(orderBy: { createdAt: asc }) {
+    ...FullPost
+  }
+  board {
+    id
+    provider
+  }
+}
+
+
+query ThreadQuery($id: String!) {
+  thread(where: { id: $id }) {
+    ...FullThread
+  }
+}
