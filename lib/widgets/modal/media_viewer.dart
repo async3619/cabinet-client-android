@@ -1,6 +1,10 @@
 import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
+import '../../utils/attachment.dart';
 import '../media_viewer.dart';
 
 class MediaViewerModal extends ModalRoute {
@@ -37,6 +41,29 @@ class MediaViewerModal extends ModalRoute {
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 100);
+
+  downloadAttachment(Fragment$FullAttachment attachment) async {
+    final storagePermissionStatus = await Permission.storage.status;
+    final notificationPermissionStatus = await Permission.notification.status;
+
+    if (storagePermissionStatus.isDenied) {
+      await Permission.storage.request();
+    }
+
+    if (notificationPermissionStatus.isDenied) {
+      await Permission.notification.request();
+    }
+
+    final directory = await getApplicationDocumentsDirectory();
+
+    await FlutterDownloader.enqueue(
+      url: getAttachmentUrl(attachment),
+      savedDir: directory.path,
+      showNotification: true,
+      openFileFromNotification: true,
+      saveInPublicStorage: true,
+    );
+  }
 
   handlePageChanged(int index) {
     setState(() {
@@ -87,7 +114,14 @@ class MediaViewerModal extends ModalRoute {
                 ),
               ],
             ),
-            actions: [],
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.download),
+                onPressed: () {
+                  downloadAttachment(currentAttachment);
+                },
+              ),
+            ],
           ),
           Expanded(
             child: PageView(
