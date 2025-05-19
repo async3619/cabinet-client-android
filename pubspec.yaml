@@ -42,6 +42,8 @@ dependencies:
   intl: ^0.20.2
   filesize: ^2.0.1
   flutter_html: ^3.0.0
+  video_player: ^2.9.5
+  chewie: ^1.11.3
 
 dev_dependencies:
   flutter_test:

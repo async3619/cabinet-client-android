@@ -1,5 +1,6 @@
 import 'package:cabinet_client_android/queries/thread.graphql.dart';
 import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
+import 'package:cabinet_client_android/widgets/modal/media_viewer.dart';
 import 'package:cabinet_client_android/widgets/post_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
@@ -24,15 +25,9 @@ class _PostListState extends State<PostList> {
   void initState() {
     super.initState();
 
-    postsFuture = this.fetchPostList().then((posts) {
+    postsFuture = fetchPostList().then((posts) {
       setState(() {
         this.posts = posts;
-        attachments =
-            posts
-                .expand(
-                  (post) => post.attachments ?? <Fragment$FullAttachment>[],
-                )
-                .toList();
       });
 
       return posts;
@@ -55,6 +50,46 @@ class _PostListState extends State<PostList> {
     }
 
     return data.thread!.posts!;
+  }
+
+  void handleShowAttachment(
+    Fragment$FullAttachment attachment,
+    Fragment$FullPost post,
+  ) {
+    final allPosts = posts!;
+    int startIndex = 0;
+    for (var i = 0; i < allPosts.length; i++) {
+      if (allPosts[i].id == post.id) {
+        break;
+      }
+
+      startIndex += allPosts[i].attachments?.length ?? 0;
+    }
+
+    final targetPost = allPosts.firstWhere((p) => p.id == post.id);
+    if (targetPost.attachments == null || targetPost.attachments == null) {
+      throw Exception("No attachments available");
+    }
+
+    final attachmentIndex = targetPost.attachments!.indexWhere(
+      (a) => a.id == attachment.id,
+    );
+    if (attachmentIndex == -1) {
+      throw Exception("Attachment not found");
+    }
+
+    final attachmentIndexInAllPosts = startIndex + attachmentIndex;
+    final allAttachments =
+        allPosts
+            .expand((p) => p.attachments ?? <Fragment$FullAttachment>[])
+            .toList();
+
+    Navigator.of(context).push(
+      MediaViewerModal(
+        attachments: allAttachments,
+        currentIndex: attachmentIndexInAllPosts,
+      ),
+    );
   }
 
   @override
@@ -83,7 +118,10 @@ class _PostListState extends State<PostList> {
             itemCount: posts!.length,
             itemBuilder: (context, index) {
               final post = posts![index];
-              return PostListItem(post: post);
+              return PostListItem(
+                post: post,
+                onShowAttachment: handleShowAttachment,
+              );
             },
           );
         },
