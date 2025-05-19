@@ -1,10 +1,13 @@
 import 'package:cabinet_client_android/routes/home/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 void main() async {
   await initHiveForFlutter();
+
+  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
 
   final HttpLink httpLink = HttpLink(
     'https://cabinet-api.sophia-dev.io/graphql',
