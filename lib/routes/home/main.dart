@@ -36,12 +36,15 @@ class _HomeRouteState extends State<HomeRoute> {
             body: const Center(child: CircularProgressIndicator()),
           );
         } else {
+          final watchers = result.parsedData!.watchers;
+
           switch (_selectedTabIndex) {
             case 0:
-              body = ThreadsTab();
+              body = ThreadsTab(watchers: watchers);
               break;
+
             case 1:
-              body = AttachmentsTab(watchers: result.parsedData!.watchers);
+              body = AttachmentsTab(watchers: watchers);
               break;
 
             default:

@@ -2,11 +2,15 @@ import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
 import 'package:cabinet_client_android/queries/watchers.graphql.dart';
 import 'package:cabinet_client_android/widgets/thread_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
+import '../../widgets/watcher_dropdown.dart';
 import '../thread.dart';
 
 class ThreadsTab extends StatefulWidget {
-  const ThreadsTab({super.key});
+  final List<Fragment$FullWatcher> watchers;
+
+  const ThreadsTab({super.key, required this.watchers});
 
   @override
   State<ThreadsTab> createState() => _ThreadsTabState();
@@ -18,6 +22,8 @@ class _ThreadsTabState extends State<ThreadsTab> {
   @override
   void initState() {
     super.initState();
+
+    selectedWatcher = widget.watchers.isNotEmpty ? widget.watchers[0] : null;
   }
 
   handleThreadTap(Fragment$MinimalThread thread) {
@@ -27,64 +33,80 @@ class _ThreadsTabState extends State<ThreadsTab> {
     );
   }
 
-  buildWatcherDropdown(List<Fragment$FullWatcher> watchers) {
-    return DropdownButton<Fragment$FullWatcher>(
-      items:
-          watchers
-              .map(
-                (watcher) => DropdownMenuItem<Fragment$FullWatcher>(
-                  value: watcher,
-                  child: Text(watcher.name),
-                ),
-              )
-              .toList(),
-      onChanged: (value) {
-        setState(() {
-          selectedWatcher = value;
-        });
+  handleWatcherChange(Fragment$FullWatcher? watcher) {
+    setState(() {
+      selectedWatcher = watcher;
+    });
+  }
+
+  Widget buildBody() {
+    if (selectedWatcher == null) {
+      return Center(
+        child: Text(
+          'Select a watcher to see their threads',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      );
+    }
+
+    final options = Options$Query$WatcherThreadsQuery(
+      variables: Variables$Query$WatcherThreadsQuery(
+        id: int.parse(selectedWatcher!.id),
+      ),
+      fetchPolicy: FetchPolicy.networkOnly,
+    );
+
+    return Query$WatcherThreadsQuery$Widget(
+      options: options,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.parsedData == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (result.parsedData!.watcher == null) {
+          return Center(
+            child: Text(
+              'No watcher found with id: ${selectedWatcher!.id}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          );
+        }
+
+        if (result.parsedData!.watcher!.threads == null ||
+            result.parsedData!.watcher!.threads!.isEmpty) {
+          return Center(
+            child: Text(
+              'No threads found for ${selectedWatcher!.name}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          );
+        }
+
+        final threads = result.parsedData!.watcher!.threads!;
+
+        return RefreshIndicator(
+          child: ThreadGrid(threads: threads, onThreadTap: handleThreadTap),
+          onRefresh: () async {
+            if (refetch != null) {
+              await refetch();
+            }
+          },
+        );
       },
-      value: selectedWatcher,
-      hint: const Text('Select a watcher'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Query$WatchersQuery$Widget(
-      builder: (result, {fetchMore, refetch}) {
-        if (result.parsedData == null) {
-          return Column(
-            children: [
-              AppBar(title: const Text('Threads')),
-              Expanded(child: Center(child: CircularProgressIndicator())),
-            ],
-          );
-        }
-
-        final watchers = result.parsedData!.watchers;
-
-        Widget content;
-        if (selectedWatcher == null) {
-          content = Center(
-            child: Text(
-              'Select a watcher to see their threads',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          );
-        } else {
-          content = ThreadGrid(
-            watcher: selectedWatcher!,
-            onThreadTap: handleThreadTap,
-          );
-        }
-
-        return Column(
-          children: [
-            AppBar(title: buildWatcherDropdown(watchers)),
-            Expanded(child: content),
-          ],
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: WatcherDropdown(
+          watchers: widget.watchers,
+          selectedWatcher: selectedWatcher,
+          onChanged: handleWatcherChange,
+        ),
+      ),
+      body: buildBody(),
     );
   }
 }
