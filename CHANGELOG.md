@@ -1,3 +1,9 @@
+## [1.0.0-dev.5](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2025-05-20)
+
+### Internal 🧰
+
+* **threads:** make watcher instances of threads tab content managed by parent ([#11](https://github.com/async3619/cabinet-client-android/issues/11)) ([fcabb20](https://github.com/async3619/cabinet-client-android/commit/fcabb20abfe2bd1cdabba0d80e4e4bdd2ae78404))
+
 ## [1.0.0-dev.4](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2025-05-20)
 
 ### Features ✨
