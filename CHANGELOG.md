@@ -1,3 +1,9 @@
+## [1.0.0-dev.6](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2025-05-20)
+
+### Bug Fixes 🐞
+
+* **threads:** fix a bug that threads tab content build incorrectly ([#14](https://github.com/async3619/cabinet-client-android/issues/14)) ([11c31db](https://github.com/async3619/cabinet-client-android/commit/11c31db060ea6af359bc6578f7c53a0e2a8d975f))
+
 ## [1.0.0-dev.5](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2025-05-20)
 
 ### Internal 🧰
