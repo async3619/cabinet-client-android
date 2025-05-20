@@ -3,6 +3,7 @@ import 'package:cabinet_client_android/queries/watchers.graphql.dart';
 import 'package:cabinet_client_android/widgets/attachment_grid.dart';
 import 'package:cabinet_client_android/widgets/watcher_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class AttachmentsTab extends StatefulWidget {
   final List<Fragment$FullWatcher> watchers;
@@ -41,6 +42,7 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
         variables: Variables$Query$WatcherAttachmentsQuery(
           id: int.parse(selectedWatcher!.id),
         ),
+        fetchPolicy: FetchPolicy.networkOnly,
       );
 
       return Query$WatcherAttachmentsQuery$Widget(
