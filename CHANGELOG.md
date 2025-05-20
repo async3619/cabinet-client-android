@@ -1,3 +1,9 @@
+## [1.0.0-dev.4](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2025-05-20)
+
+### Features ✨
+
+* **attachments:** implement attachment list by watcher tab ([#10](https://github.com/async3619/cabinet-client-android/issues/10)) ([4aca605](https://github.com/async3619/cabinet-client-android/commit/4aca6059cae7e1c38866ce7ed301245cd460964f))
+
 ## [1.0.0-dev.3](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2025-05-20)
 
 ### Features ✨
