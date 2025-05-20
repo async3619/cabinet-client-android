@@ -17,25 +17,23 @@ class _ThreadGridState extends State<ThreadGrid> {
   Widget build(BuildContext context) {
     final threads = widget.threads;
 
-    return Expanded(
-      child: GridView(
-        padding: EdgeInsets.zero,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 3 / 5,
-        ),
-        children: List.generate(
-          threads.length,
-          (index) => ThreadGridItem(
-            thread: threads[index],
-            onTap: (thread) {
-              if (widget.onThreadTap == null) {
-                return;
-              }
+    return GridView(
+      padding: EdgeInsets.zero,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: 3 / 5,
+      ),
+      children: List.generate(
+        threads.length,
+        (index) => ThreadGridItem(
+          thread: threads[index],
+          onTap: (thread) {
+            if (widget.onThreadTap == null) {
+              return;
+            }
 
-              widget.onThreadTap!(thread);
-            },
-          ),
+            widget.onThreadTap!(thread);
+          },
         ),
       ),
     );
