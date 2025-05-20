@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+import 'modal/gallery.dart';
+
 class PostList extends StatefulWidget {
   final Fragment$MinimalThread thread;
   final GraphQLClient client;
@@ -20,7 +22,6 @@ class _PostListState extends State<PostList> {
   AutoScrollController? scrollController;
 
   List<Fragment$FullPost>? posts;
-  List<Fragment$FullAttachment>? attachments;
 
   Future<List<Fragment$FullPost>>? postsFuture;
 
@@ -124,6 +125,26 @@ class _PostListState extends State<PostList> {
     );
   }
 
+  void handleShowGallery() {
+    if (posts == null) {
+      return;
+    }
+
+    final allAttachments =
+        posts!
+            .expand((p) => p.attachments ?? <Fragment$FullAttachment>[])
+            .toList();
+
+    Navigator.of(context).push(
+      GalleryModal(
+        attachments: allAttachments,
+        title:
+            widget.thread.title ??
+            "Thread #${widget.thread.id.split("::").last}",
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     String title =
@@ -133,6 +154,10 @@ class _PostListState extends State<PostList> {
       appBar: AppBar(
         title: Text(title),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.photo_library),
+            onPressed: handleShowGallery,
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
