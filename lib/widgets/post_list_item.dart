@@ -18,16 +18,20 @@ TextStyle descriptionText(BuildContext context, int? alpha) {
 
 class PostListItem extends StatelessWidget {
   final Fragment$FullPost post;
+  final List<String> replyPostIds;
+  final Map<int, String> postNoToIdMap;
+
+  final void Function(List<String> postIds)? onRequestShowPost;
   final void Function(Fragment$FullAttachment, Fragment$FullPost)?
   onShowAttachment;
-
-  final void Function(List<int> postIds)? onRequestShowPost;
 
   const PostListItem({
     super.key,
     required this.post,
     this.onShowAttachment,
     this.onRequestShowPost,
+    required this.replyPostIds,
+    required this.postNoToIdMap,
   });
 
   @override
@@ -152,7 +156,10 @@ class PostListItem extends StatelessWidget {
                       return;
                     }
 
-                    final postId = int.tryParse(url.substring(2));
+                    final postNo = int.tryParse(url.substring(2));
+                    if (postNo == null) return;
+
+                    final postId = postNoToIdMap[postNo];
                     if (postId == null) return;
 
                     onRequestShowPost!([postId]);
@@ -170,6 +177,21 @@ class PostListItem extends StatelessWidget {
                     '.quote': Style(color: const Color(0xFFB5BD68)),
                   },
                 ),
+                if (replyPostIds.isNotEmpty) const SizedBox(height: 8),
+                if (replyPostIds.isNotEmpty)
+                  InkWell(
+                    onTap: () {
+                      if (onRequestShowPost == null) {
+                        return;
+                      }
+
+                      onRequestShowPost!(replyPostIds);
+                    },
+                    child: Text(
+                      '${replyPostIds.length} replies',
+                      style: descriptionTextStyle,
+                    ),
+                  ),
               ],
             ),
           ),
