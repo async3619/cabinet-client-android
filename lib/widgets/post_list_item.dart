@@ -177,8 +177,8 @@ class PostListItem extends StatelessWidget {
                     '.quote': Style(color: const Color(0xFFB5BD68)),
                   },
                 ),
-                if (replyPostIds.length > 0) const SizedBox(height: 8),
-                if (replyPostIds.length > 0)
+                if (replyPostIds.isNotEmpty) const SizedBox(height: 8),
+                if (replyPostIds.isNotEmpty)
                   InkWell(
                     onTap: () {
                       if (onRequestShowPost == null) {
