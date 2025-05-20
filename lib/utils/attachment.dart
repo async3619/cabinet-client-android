@@ -1,4 +1,4 @@
-import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
+import 'package:cabinet/queries/watcherThreads.graphql.dart';
 
 String getAttachmentUrl(Fragment$FullAttachment attachment) {
   return "https://cabinet-api.sophia-dev.io/attachments/${attachment.uuid}/${Uri.encodeComponent(attachment.name)}${attachment.$extension}";

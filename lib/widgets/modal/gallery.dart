@@ -1,5 +1,5 @@
-import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
-import 'package:cabinet_client_android/widgets/attachment_grid.dart';
+import 'package:cabinet/queries/watcherThreads.graphql.dart';
+import 'package:cabinet/widgets/attachment_grid.dart';
 import 'package:flutter/material.dart';
 
 class GalleryModal extends ModalRoute {

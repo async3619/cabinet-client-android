@@ -1,6 +1,6 @@
-import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
-import 'package:cabinet_client_android/utils/attachment.dart';
-import 'package:cabinet_client_android/widgets/video_progress.dart';
+import 'package:cabinet/queries/watcherThreads.graphql.dart';
+import 'package:cabinet/utils/attachment.dart';
+import 'package:cabinet/widgets/video_progress.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';

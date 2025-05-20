@@ -1,4 +1,4 @@
-import 'package:cabinet_client_android/routes/home/main.dart';
+import 'package:cabinet/routes/home/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

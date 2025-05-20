@@ -1,7 +1,7 @@
-import 'package:cabinet_client_android/queries/thread.graphql.dart';
-import 'package:cabinet_client_android/queries/watcherThreads.graphql.dart';
-import 'package:cabinet_client_android/widgets/modal/media_viewer.dart';
-import 'package:cabinet_client_android/widgets/post_list_item.dart';
+import 'package:cabinet/queries/thread.graphql.dart';
+import 'package:cabinet/queries/watcherThreads.graphql.dart';
+import 'package:cabinet/widgets/modal/media_viewer.dart';
+import 'package:cabinet/widgets/post_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';

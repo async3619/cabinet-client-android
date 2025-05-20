@@ -1,5 +1,5 @@
-import 'package:cabinet_client_android/queries/watchers.graphql.dart';
-import 'package:cabinet_client_android/routes/home/threads.dart';
+import 'package:cabinet/queries/watchers.graphql.dart';
+import 'package:cabinet/routes/home/threads.dart';
 import 'package:flutter/material.dart';
 
 import 'attachments.dart';

@@ -1,7 +1,7 @@
-import 'package:cabinet_client_android/queries/watcherAttachments.graphql.dart';
-import 'package:cabinet_client_android/queries/watchers.graphql.dart';
-import 'package:cabinet_client_android/widgets/attachment_grid.dart';
-import 'package:cabinet_client_android/widgets/watcher_dropdown.dart';
+import 'package:cabinet/queries/watcherAttachments.graphql.dart';
+import 'package:cabinet/queries/watchers.graphql.dart';
+import 'package:cabinet/widgets/attachment_grid.dart';
+import 'package:cabinet/widgets/watcher_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
