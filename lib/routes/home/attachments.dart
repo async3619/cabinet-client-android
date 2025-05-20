@@ -69,7 +69,14 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
             );
           }
 
-          return AttachmentGrid(attachments: attachments);
+          return RefreshIndicator(
+            child: AttachmentGrid(attachments: attachments),
+            onRefresh: () async {
+              if (refetch != null) {
+                await refetch();
+              }
+            },
+          );
         },
       );
     }
