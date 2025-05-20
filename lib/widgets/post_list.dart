@@ -38,6 +38,7 @@ class _PostListState extends State<PostList> {
       setState(() {
         this.posts = posts;
         replyMap = generateReplyMapFromPosts(posts);
+        postNoToIdMap = generatePostNoToIdMap(posts);
       });
 
       return posts;
