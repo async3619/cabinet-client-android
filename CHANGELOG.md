@@ -1,3 +1,9 @@
+## [1.0.0-dev.7](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.6...v1.0.0-dev.7) (2025-05-20)
+
+### Features ✨
+
+* **post:** make post card to be able to show its own replies ([#15](https://github.com/async3619/cabinet-client-android/issues/15)) ([6317c45](https://github.com/async3619/cabinet-client-android/commit/6317c457ca07b2352f36bb0d483a1e7c2d9160f3))
+
 ## [1.0.0-dev.6](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2025-05-20)
 
 ### Bug Fixes 🐞
