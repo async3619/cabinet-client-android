@@ -37,51 +37,51 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       );
-    } else {
-      final options = Options$Query$WatcherAttachmentsQuery(
-        variables: Variables$Query$WatcherAttachmentsQuery(
-          id: int.parse(selectedWatcher!.id),
-        ),
-        fetchPolicy: FetchPolicy.networkOnly,
-      );
-
-      return Query$WatcherAttachmentsQuery$Widget(
-        options: options,
-        builder: (result, {fetchMore, refetch}) {
-          if (result.parsedData == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (result.parsedData!.watcher == null) {
-            return Center(
-              child: Text(
-                'No watcher found with id: ${selectedWatcher!.id}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            );
-          }
-
-          final attachments = result.parsedData!.watcher!.attachments;
-          if (attachments == null || attachments.isEmpty) {
-            return Center(
-              child: Text(
-                'No attachments found for ${selectedWatcher!.name}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            );
-          }
-
-          return RefreshIndicator(
-            child: AttachmentGrid(attachments: attachments),
-            onRefresh: () async {
-              if (refetch != null) {
-                await refetch();
-              }
-            },
-          );
-        },
-      );
     }
+
+    final options = Options$Query$WatcherAttachmentsQuery(
+      variables: Variables$Query$WatcherAttachmentsQuery(
+        id: int.parse(selectedWatcher!.id),
+      ),
+      fetchPolicy: FetchPolicy.networkOnly,
+    );
+
+    return Query$WatcherAttachmentsQuery$Widget(
+      options: options,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.parsedData == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (result.parsedData!.watcher == null) {
+          return Center(
+            child: Text(
+              'No watcher found with id: ${selectedWatcher!.id}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          );
+        }
+
+        final attachments = result.parsedData!.watcher!.attachments;
+        if (attachments == null || attachments.isEmpty) {
+          return Center(
+            child: Text(
+              'No attachments found for ${selectedWatcher!.name}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          );
+        }
+
+        return RefreshIndicator(
+          child: AttachmentGrid(attachments: attachments),
+          onRefresh: () async {
+            if (refetch != null) {
+              await refetch();
+            }
+          },
+        );
+      },
+    );
   }
 
   @override
