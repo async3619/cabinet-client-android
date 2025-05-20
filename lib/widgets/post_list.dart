@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+import '../utils/attachment.dart';
+import '../utils/post.dart';
+import 'dialog/post.dart';
 import 'modal/gallery.dart';
 
 class PostList extends StatefulWidget {
@@ -22,6 +25,8 @@ class _PostListState extends State<PostList> {
   AutoScrollController? scrollController;
 
   List<Fragment$FullPost>? posts;
+  Map<String, List<String>> replyMap = {};
+  Map<int, String> postNoToIdMap = {};
 
   Future<List<Fragment$FullPost>>? postsFuture;
 
@@ -32,6 +37,7 @@ class _PostListState extends State<PostList> {
     postsFuture = fetchPostList().then((posts) {
       setState(() {
         this.posts = posts;
+        replyMap = generateReplyMapFromPosts(posts);
       });
 
       return posts;
@@ -88,31 +94,14 @@ class _PostListState extends State<PostList> {
     Fragment$FullAttachment attachment,
     Fragment$FullPost post,
   ) {
-    final allPosts = posts!;
-    int startIndex = 0;
-    for (var i = 0; i < allPosts.length; i++) {
-      if (allPosts[i].id == post.id) {
-        break;
-      }
-
-      startIndex += allPosts[i].attachments?.length ?? 0;
-    }
-
-    final targetPost = allPosts.firstWhere((p) => p.id == post.id);
-    if (targetPost.attachments == null || targetPost.attachments == null) {
-      throw Exception("No attachments available");
-    }
-
-    final attachmentIndex = targetPost.attachments!.indexWhere(
-      (a) => a.id == attachment.id,
+    final attachmentIndexInAllPosts = getAttachmentIndex(
+      posts!,
+      attachment,
+      post,
     );
-    if (attachmentIndex == -1) {
-      throw Exception("Attachment not found");
-    }
 
-    final attachmentIndexInAllPosts = startIndex + attachmentIndex;
     final allAttachments =
-        allPosts
+        posts!
             .expand((p) => p.attachments ?? <Fragment$FullAttachment>[])
             .toList();
 
@@ -122,6 +111,27 @@ class _PostListState extends State<PostList> {
         currentIndex: attachmentIndexInAllPosts,
         onIndexChanged: handleMediaIndexChanged,
       ),
+    );
+  }
+
+  void handleRequestShowPost(List<String> postIds) {
+    final posts =
+        this.posts!.where((post) => postIds.contains(post.id)).toList();
+
+    if (posts.isEmpty) {
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (_) {
+        return PostDialog(
+          posts: posts,
+          allPosts: this.posts!,
+          postNoToIdMap: postNoToIdMap,
+          replyMap: replyMap,
+        );
+      },
     );
   }
 
@@ -188,13 +198,17 @@ class _PostListState extends State<PostList> {
             itemCount: posts!.length,
             itemBuilder: (context, index) {
               final post = posts![index];
+
               return AutoScrollTag(
                 key: ValueKey(index),
                 controller: scrollController!,
                 index: index,
                 child: PostListItem(
                   post: post,
+                  replyPostIds: replyMap[post.id] ?? [],
+                  postNoToIdMap: postNoToIdMap,
                   onShowAttachment: handleShowAttachment,
+                  onRequestShowPost: handleRequestShowPost,
                 ),
               );
             },
