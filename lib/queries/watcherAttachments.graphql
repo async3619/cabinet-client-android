@@ -1,0 +1,8 @@
+query WatcherAttachmentsQuery($id: Int!) {
+  watcher(where: { id: $id }) {
+    id
+    attachments(orderBy: { createdAt: desc }) {
+      ...FullAttachment
+    }
+  }
+}
