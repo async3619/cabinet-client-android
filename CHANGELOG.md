@@ -1,3 +1,9 @@
+## [1.0.0-dev.3](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2025-05-20)
+
+### Features ✨
+
+* **gallery:** implement gallery feature for posts route ([#6](https://github.com/async3619/cabinet-client-android/issues/6)) ([641add2](https://github.com/async3619/cabinet-client-android/commit/641add29edca646c8c111e873cb98b5c7c16f8aa))
+
 ## [1.0.0-dev.2](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2025-05-19)
 
 ### Features ✨
