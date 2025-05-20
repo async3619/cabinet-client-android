@@ -1,4 +1,4 @@
-name: cabinet_client_android
+name: Cabinet
 description: "The android client application for cabinet server"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
