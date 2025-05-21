@@ -4,6 +4,7 @@ import 'package:cabinet/routes/home/statistics.dart';
 import 'package:cabinet/routes/home/threads.dart';
 import 'package:cabinet/widgets/app_bar/title.dart';
 import 'package:cabinet/widgets/app_bar/watcher_selector.dart';
+import 'package:cabinet/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +88,7 @@ class _HomeRouteState extends State<HomeRoute>
     return Provider<Fragment$FullWatcher?>.value(
       value: _selectedWatcher,
       child: Scaffold(
+        drawer: AppDrawer(),
         appBar: appBar,
         body: body,
         bottomNavigationBar: BottomNavigationBar(
