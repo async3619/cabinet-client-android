@@ -71,7 +71,7 @@ class _MediaViewerState extends State<MediaViewer> {
     }
 
     _controller!.addListener(() {
-      if (_controller!.value.isPlaying != isVideoPlaying) {
+      if (_controller!.value.isPlaying != isVideoPlaying && mounted) {
         setState(() {
           isVideoPlaying = _controller!.value.isPlaying;
         });
@@ -79,6 +79,10 @@ class _MediaViewerState extends State<MediaViewer> {
     });
 
     _controller!.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+
       _chewieController = ChewieController(
         videoPlayerController: _controller!,
         autoPlay: true,
