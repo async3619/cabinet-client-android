@@ -1,3 +1,9 @@
+## [1.0.0-dev.8](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.7...v1.0.0-dev.8) (2025-05-21)
+
+### Bug Fixes 🐞
+
+* **media:** fix a bug that video keeps playing even if media viewer modal is closed ([#20](https://github.com/async3619/cabinet-client-android/issues/20)) ([25b1ca5](https://github.com/async3619/cabinet-client-android/commit/25b1ca5c61084c79ebce2f96911431495ee20e30))
+
 ## [1.0.0-dev.7](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.6...v1.0.0-dev.7) (2025-05-20)
 
 ### Features ✨
