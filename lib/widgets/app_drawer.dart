@@ -1,3 +1,4 @@
+import 'package:cabinet/routes/settings.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -10,6 +11,10 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   void handleTapSettings() {
     Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SettingsRoute()),
+    );
   }
 
   @override
