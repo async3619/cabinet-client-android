@@ -1,0 +1,6 @@
+query StatisticQuery {
+  postCount
+  threadCount
+  attachmentCount
+  totalSize
+}

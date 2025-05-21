@@ -1,4 +1,5 @@
 import 'package:cabinet/queries/watchers.graphql.dart';
+import 'package:cabinet/routes/home/statistics.dart';
 import 'package:cabinet/routes/home/threads.dart';
 import 'package:flutter/material.dart';
 
@@ -40,10 +41,14 @@ class _HomeRouteState extends State<HomeRoute> {
 
           switch (_selectedTabIndex) {
             case 0:
-              body = ThreadsTab(watchers: watchers);
+              body = StatisticsTab();
               break;
 
             case 1:
+              body = ThreadsTab(watchers: watchers);
+              break;
+
+            case 2:
               body = AttachmentsTab(watchers: watchers);
               break;
 
@@ -56,6 +61,10 @@ class _HomeRouteState extends State<HomeRoute> {
           body: body,
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart),
+                label: 'Statistics',
+              ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.all_inbox),
                 label: 'Threads',
