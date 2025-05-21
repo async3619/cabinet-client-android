@@ -1,3 +1,9 @@
+## [1.0.0-dev.9](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.8...v1.0.0-dev.9) (2025-05-21)
+
+### Features ✨
+
+* **statistics:** implement basic statistic data view tab ([#22](https://github.com/async3619/cabinet-client-android/issues/22)) ([f169a71](https://github.com/async3619/cabinet-client-android/commit/f169a71a1687f31c1dfa72d5bb8893352492a8a0))
+
 ## [1.0.0-dev.8](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.7...v1.0.0-dev.8) (2025-05-21)
 
 ### Bug Fixes 🐞
