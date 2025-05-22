@@ -1,3 +1,9 @@
+## [1.0.0-dev.10](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.9...v1.0.0-dev.10) (2025-05-22)
+
+### Features ✨
+
+* **settings:** now user can specify target cabinet server url ([#23](https://github.com/async3619/cabinet-client-android/issues/23)) ([b111fec](https://github.com/async3619/cabinet-client-android/commit/b111fec86dd82998d6166180d294d6787a9d9ae9))
+
 ## [1.0.0-dev.9](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.8...v1.0.0-dev.9) (2025-05-21)
 
 ### Features ✨
