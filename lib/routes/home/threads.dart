@@ -3,27 +3,21 @@ import 'package:cabinet/queries/watchers.graphql.dart';
 import 'package:cabinet/widgets/thread_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
-import '../../widgets/watcher_dropdown.dart';
 import '../thread.dart';
 
 class ThreadsTab extends StatefulWidget {
-  final List<Fragment$FullWatcher> watchers;
-
-  const ThreadsTab({super.key, required this.watchers});
+  const ThreadsTab({super.key});
 
   @override
   State<ThreadsTab> createState() => _ThreadsTabState();
 }
 
 class _ThreadsTabState extends State<ThreadsTab> {
-  Fragment$FullWatcher? selectedWatcher;
-
   @override
   void initState() {
     super.initState();
-
-    selectedWatcher = widget.watchers.isNotEmpty ? widget.watchers[0] : null;
   }
 
   handleThreadTap(Fragment$MinimalThread thread) {
@@ -33,14 +27,10 @@ class _ThreadsTabState extends State<ThreadsTab> {
     );
   }
 
-  handleWatcherChange(Fragment$FullWatcher? watcher) {
-    setState(() {
-      selectedWatcher = watcher;
-    });
-  }
-
-  Widget buildBody() {
-    if (selectedWatcher == null) {
+  @override
+  Widget build(BuildContext context) {
+    final currentWatcher = Provider.of<Fragment$FullWatcher?>(context);
+    if (currentWatcher == null) {
       return Center(
         child: Text(
           'Select a watcher to see their threads',
@@ -51,7 +41,7 @@ class _ThreadsTabState extends State<ThreadsTab> {
 
     final options = Options$Query$WatcherThreadsQuery(
       variables: Variables$Query$WatcherThreadsQuery(
-        id: int.parse(selectedWatcher!.id),
+        id: int.parse(currentWatcher.id),
       ),
       fetchPolicy: FetchPolicy.networkOnly,
     );
@@ -66,7 +56,7 @@ class _ThreadsTabState extends State<ThreadsTab> {
         if (result.parsedData!.watcher == null) {
           return Center(
             child: Text(
-              'No watcher found with id: ${selectedWatcher!.id}',
+              'No watcher found with id: ${currentWatcher.id}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           );
@@ -76,7 +66,7 @@ class _ThreadsTabState extends State<ThreadsTab> {
             result.parsedData!.watcher!.threads!.isEmpty) {
           return Center(
             child: Text(
-              'No threads found for ${selectedWatcher!.name}',
+              'No threads found for ${currentWatcher.name}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           );
@@ -93,20 +83,6 @@ class _ThreadsTabState extends State<ThreadsTab> {
           },
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: WatcherDropdown(
-          watchers: widget.watchers,
-          selectedWatcher: selectedWatcher,
-          onChanged: handleWatcherChange,
-        ),
-      ),
-      body: buildBody(),
     );
   }
 }

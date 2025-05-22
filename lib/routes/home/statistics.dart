@@ -11,7 +11,6 @@ class StatisticsTab extends StatelessWidget {
     final formatter = NumberFormat('###,###,###,###');
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Statistics')),
       body: Query$StatisticQuery$Widget(
         builder: (result, {fetchMore, refetch}) {
           if (result.parsedData == null) {

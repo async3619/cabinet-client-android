@@ -1,7 +1,13 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:cabinet/queries/watchers.graphql.dart';
 import 'package:cabinet/routes/home/statistics.dart';
 import 'package:cabinet/routes/home/threads.dart';
+import 'package:cabinet/widgets/app_bar/title.dart';
+import 'package:cabinet/widgets/app_bar/watcher_selector.dart';
+import 'package:cabinet/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
 import 'attachments.dart';
 
@@ -12,12 +18,25 @@ class HomeRoute extends StatefulWidget {
   State<HomeRoute> createState() => _HomeRouteState();
 }
 
-class _HomeRouteState extends State<HomeRoute> {
+class _HomeRouteState extends State<HomeRoute>
+    with AfterLayoutMixin<HomeRoute> {
   int _selectedTabIndex = 0;
 
+  List<Fragment$FullWatcher>? _watchers;
+  Fragment$FullWatcher? _selectedWatcher;
+
   @override
-  void initState() {
-    super.initState();
+  void afterFirstLayout(BuildContext context) {
+    GraphQLProvider.of(context).value.query$WatchersQuery().then((result) {
+      if (result.parsedData == null) {
+        return;
+      }
+
+      setState(() {
+        _watchers = result.parsedData!.watchers;
+        _selectedWatcher = _watchers!.isNotEmpty ? _watchers![0] : null;
+      });
+    });
   }
 
   void handleSelectTab(int index) {
@@ -26,60 +45,72 @@ class _HomeRouteState extends State<HomeRoute> {
     });
   }
 
+  void handleSelectedWatcherChanged(Fragment$FullWatcher? watcher) {
+    setState(() {
+      _selectedWatcher = watcher;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Query$WatchersQuery$Widget(
-      builder: (result, {fetchMore, refetch}) {
-        Widget body;
-        if (result.parsedData == null) {
-          body = Scaffold(
-            appBar: AppBar(title: const Text('Cabinet')),
-            body: const Center(child: CircularProgressIndicator()),
-          );
-        } else {
-          final watchers = result.parsedData!.watchers;
+    if (_watchers == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
-          switch (_selectedTabIndex) {
-            case 0:
-              body = StatisticsTab();
-              break;
+    PreferredSizeWidget appBar;
+    Widget body;
+    switch (_selectedTabIndex) {
+      case 0:
+        body = StatisticsTab();
+        appBar = TitleAppBar(title: "Cabinet");
+        break;
 
-            case 1:
-              body = ThreadsTab(watchers: watchers);
-              break;
-
-            case 2:
-              body = AttachmentsTab(watchers: watchers);
-              break;
-
-            default:
-              throw Exception('Invalid tab index: $_selectedTabIndex');
-          }
-        }
-
-        return Scaffold(
-          body: body,
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.bar_chart),
-                label: 'Statistics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.all_inbox),
-                label: 'Threads',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.photo_library),
-                label: 'Attachments',
-              ),
-            ],
-
-            currentIndex: _selectedTabIndex,
-            onTap: handleSelectTab,
-          ),
+      case 1:
+        body = ThreadsTab();
+        appBar = WatcherSelectorAppBar(
+          watchers: _watchers!,
+          onSelectedWatcherChanged: handleSelectedWatcherChanged,
         );
-      },
+        break;
+
+      case 2:
+        body = AttachmentsTab();
+        appBar = WatcherSelectorAppBar(
+          watchers: _watchers!,
+          onSelectedWatcherChanged: handleSelectedWatcherChanged,
+        );
+        break;
+
+      default:
+        throw Exception('Invalid tab index: $_selectedTabIndex');
+    }
+
+    return Provider<Fragment$FullWatcher?>.value(
+      value: _selectedWatcher,
+      child: Scaffold(
+        drawer: AppDrawer(),
+        appBar: appBar,
+        body: body,
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Statistics',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.all_inbox),
+              label: 'Threads',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.photo_library),
+              label: 'Attachments',
+            ),
+          ],
+
+          currentIndex: _selectedTabIndex,
+          onTap: handleSelectTab,
+        ),
+      ),
     );
   }
 }

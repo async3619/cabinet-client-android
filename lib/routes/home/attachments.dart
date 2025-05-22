@@ -1,14 +1,12 @@
 import 'package:cabinet/queries/watcherAttachments.graphql.dart';
 import 'package:cabinet/queries/watchers.graphql.dart';
 import 'package:cabinet/widgets/attachment_grid.dart';
-import 'package:cabinet/widgets/watcher_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
 
 class AttachmentsTab extends StatefulWidget {
-  final List<Fragment$FullWatcher> watchers;
-
-  const AttachmentsTab({super.key, required this.watchers});
+  const AttachmentsTab({super.key});
 
   @override
   State<AttachmentsTab> createState() => _AttachmentsTabState();
@@ -18,18 +16,8 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
   Fragment$FullWatcher? selectedWatcher;
 
   @override
-  void initState() {
-    super.initState();
-    selectedWatcher = widget.watchers.isNotEmpty ? widget.watchers[0] : null;
-  }
-
-  void handleWatcherChange(Fragment$FullWatcher? watcher) {
-    setState(() {
-      selectedWatcher = watcher;
-    });
-  }
-
-  Widget buildBody() {
+  Widget build(BuildContext context) {
+    final selectedWatcher = Provider.of<Fragment$FullWatcher?>(context);
     if (selectedWatcher == null) {
       return Center(
         child: Text(
@@ -41,7 +29,7 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
 
     final options = Options$Query$WatcherAttachmentsQuery(
       variables: Variables$Query$WatcherAttachmentsQuery(
-        id: int.parse(selectedWatcher!.id),
+        id: int.parse(selectedWatcher.id),
       ),
       fetchPolicy: FetchPolicy.networkOnly,
     );
@@ -56,7 +44,7 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
         if (result.parsedData!.watcher == null) {
           return Center(
             child: Text(
-              'No watcher found with id: ${selectedWatcher!.id}',
+              'No watcher found with id: ${selectedWatcher.id}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           );
@@ -66,7 +54,7 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
         if (attachments == null || attachments.isEmpty) {
           return Center(
             child: Text(
-              'No attachments found for ${selectedWatcher!.name}',
+              'No attachments found for ${selectedWatcher.name}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           );
@@ -81,20 +69,6 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
           },
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: WatcherDropdown(
-          watchers: widget.watchers,
-          selectedWatcher: selectedWatcher,
-          onChanged: handleWatcherChange,
-        ),
-      ),
-      body: buildBody(),
     );
   }
 }
