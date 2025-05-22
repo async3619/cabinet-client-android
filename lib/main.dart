@@ -1,27 +1,38 @@
 import 'package:cabinet/routes/home/main.dart';
+import 'package:cabinet/routes/no_server_url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:provider/provider.dart';
+
+import 'models/config.dart';
 
 void main() async {
   await initHiveForFlutter();
 
   await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
 
-  final HttpLink httpLink = HttpLink(
-    'https://cabinet-api.sophia-dev.io/graphql',
-  );
+  final configModel = ConfigModel();
+  await configModel.initialize();
 
-  ValueNotifier<GraphQLClient> client = ValueNotifier(
-    GraphQLClient(
-      link: httpLink,
-      // The default store is the InMemoryStore, which does NOT persist to disk
-      cache: GraphQLCache(store: HiveStore()),
+  final app = const MyApp();
+  ValueNotifier<GraphQLClient>? client;
+  if (configModel.serverUrl != null) {
+    final HttpLink httpLink = HttpLink(configModel.serverUrl!);
+    client = ValueNotifier(
+      GraphQLClient(link: httpLink, cache: GraphQLCache(store: HiveStore())),
+    );
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ConfigModel>(create: (_) => configModel),
+      ],
+      child: client == null ? app : GraphQLProvider(client: client, child: app),
     ),
   );
-
-  runApp(GraphQLProvider(client: client, child: const MyApp()));
 }
 
 class MyApp extends HookWidget {
@@ -30,6 +41,11 @@ class MyApp extends HookWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    GraphQLClient? client;
+    try {
+      client = GraphQLProvider.of(context).value;
+    } catch (_) {}
+
     return MaterialApp(
       title: 'Cabinet',
       theme: ThemeData(
@@ -39,7 +55,7 @@ class MyApp extends HookWidget {
         ),
         useMaterial3: false,
       ),
-      home: const HomeRoute(),
+      home: client == null ? const NoServerUrlRoute() : const HomeRoute(),
     );
   }
 }
