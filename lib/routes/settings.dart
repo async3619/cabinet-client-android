@@ -80,6 +80,8 @@ class _SettingsRouteState extends State<SettingsRoute> {
 
   @override
   Widget build(BuildContext context) {
+    final config = Provider.of<ConfigModel>(context);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
       body: SettingsList(
@@ -89,7 +91,9 @@ class _SettingsRouteState extends State<SettingsRoute> {
             tiles: [
               SettingsTile(
                 title: const Text('Server URL'),
-                description: const Text('Specify the target server URL'),
+                description: Text(
+                  config.serverUrl ?? 'Specify the target server URL',
+                ),
                 leading: const Icon(Icons.cloud),
                 onPressed: (_) {
                   handleTapServerUrl();
