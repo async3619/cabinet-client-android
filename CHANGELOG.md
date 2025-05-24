@@ -1,3 +1,9 @@
+## [1.0.0-dev.16](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.15...v1.0.0-dev.16) (2025-05-24)
+
+### Features ✨
+
+* **threads:** make attachments in grid transparent when its watched ([#35](https://github.com/async3619/cabinet-client-android/issues/35)) ([513dbfe](https://github.com/async3619/cabinet-client-android/commit/513dbfe488d66b86d865c95b84562273e6dd667e))
+
 ## [1.0.0-dev.15](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.14...v1.0.0-dev.15) (2025-05-24)
 
 ### Features ✨
