@@ -1,3 +1,9 @@
+## [1.0.0-dev.15](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.14...v1.0.0-dev.15) (2025-05-24)
+
+### Features ✨
+
+* **threads:** make thread post list remember its scroll position ([#33](https://github.com/async3619/cabinet-client-android/issues/33)) ([22742fe](https://github.com/async3619/cabinet-client-android/commit/22742fe1ddf9c054b838be206b9bbd0987fcdaf7))
+
 ## [1.0.0-dev.14](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2025-05-24)
 
 ### Bug Fixes 🐞
