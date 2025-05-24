@@ -1,4 +1,4 @@
-name: cabinet_client_android
+name: cabinet
 description: "The android client application for cabinet server"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.0-dev.16+17
 
 environment:
   sdk: ^3.7.2
@@ -34,6 +34,28 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  graphql: ^5.2.1
+  graphql_flutter: ^5.2.0
+  flutter_hooks: ^0.20.5
+  provider: ^6.1.5
+  html: ^0.15.6
+  intl: ^0.20.2
+  filesize: ^2.0.1
+  flutter_html: ^3.0.0
+  video_player: ^2.9.5
+  chewie: ^1.11.3
+  scroll_to_index: ^3.0.1
+  flutter_downloader: ^1.12.0
+  path_provider: ^2.1.5
+  permission_handler: ^12.0.0+1
+  after_layout: ^1.2.0
+  settings_ui: ^2.0.2
+  shared_preferences: ^2.5.3
+  fluttertoast: ^8.2.12
+  objectbox: ^4.2.0
+  objectbox_flutter_libs: any
+  path: ^1.9.1
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +67,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  build_runner: ^2.4.15
+  graphql_codegen: ^1.2.3
+  objectbox_generator: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,0 +1,10 @@
+fragment FullWatcher on Watcher {
+  id
+  name
+  type
+}
+query WatchersQuery {
+  watchers {
+    ...FullWatcher
+  }
+}

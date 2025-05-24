@@ -2,21 +2,21 @@
   "name": "cabinet",
   "version": "0.0.0",
   "main": "index.js",
-  "repository": "git@github.com:async3619/cabinet.git",
+  "repository": "git@github.com:async3619/cabinet-client-android.git",
   "author": "Turner <me@sophia-dev.io>",
   "license": "MIT",
   "private": true,
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^11.1.0",
-    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/exec": "^7.1.0",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^9.2.6",
-    "@semantic-release/release-notes-generator": "^12.1.0",
-    "@types/node": "^20.10.6",
-    "conventional-changelog-conventionalcommits": "^7.0.2",
-    "semantic-release": "^22.0.12",
-    "semantic-release-pub": "^0.7.1",
-    "yaml": "^2.3.4"
+    "@semantic-release/github": "^11.0.2",
+    "@semantic-release/release-notes-generator": "^14.0.3",
+    "@types/node": "^22.15.19",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "semantic-release": "^24.2.4",
+    "semantic-release-pub": "^0.10.6",
+    "yaml": "^2.8.0"
   }
 }

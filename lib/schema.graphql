@@ -1,0 +1,1098 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AttachmentAvgAggregate {
+  width: Float
+  height: Float
+  size: Float
+  timestamp: Float
+  thumbnailWidth: Float
+  thumbnailHeight: Float
+}
+
+type AttachmentCountAggregate {
+  id: Int!
+  uuid: Int!
+  name: Int!
+  width: Int!
+  height: Int!
+  size: Int!
+  extension: Int!
+  mime: Int!
+  hash: Int!
+  createdAt: Int!
+  timestamp: Int!
+  filePath: Int!
+  thumbnailWidth: Int!
+  thumbnailHeight: Int!
+  thumbnailFilePath: Int!
+  _all: Int!
+}
+
+type AttachmentCount {
+  threads: Int!
+  posts: Int!
+  watchers: Int!
+}
+
+type AttachmentMaxAggregate {
+  id: String
+  uuid: String
+  name: String
+  width: Int
+  height: Int
+  size: Int
+  extension: String
+  mime: String
+  hash: String
+  createdAt: DateTime
+  timestamp: BigInt
+  filePath: String
+  thumbnailWidth: Int
+  thumbnailHeight: Int
+  thumbnailFilePath: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+type AttachmentMinAggregate {
+  id: String
+  uuid: String
+  name: String
+  width: Int
+  height: Int
+  size: Int
+  extension: String
+  mime: String
+  hash: String
+  createdAt: DateTime
+  timestamp: BigInt
+  filePath: String
+  thumbnailWidth: Int
+  thumbnailHeight: Int
+  thumbnailFilePath: String
+}
+
+type AttachmentSumAggregate {
+  width: Int
+  height: Int
+  size: Int
+  timestamp: BigInt
+  thumbnailWidth: Int
+  thumbnailHeight: Int
+}
+
+type Attachment {
+  id: ID!
+  uuid: String!
+  name: String!
+  width: Int!
+  height: Int!
+  size: Int
+  extension: String!
+  mime: String
+  hash: String
+  createdAt: DateTime!
+  timestamp: BigInt
+  filePath: String
+  thumbnailWidth: Int
+  thumbnailHeight: Int
+  thumbnailFilePath: String
+  threads: [Thread!]
+  posts: [Post!]
+  watchers: [Watcher!]
+  _count: AttachmentCount!
+  isVideo: Boolean!
+}
+
+type BoardCountAggregate {
+  id: Int!
+  code: Int!
+  title: Int!
+  description: Int!
+  namespace: Int!
+  provider: Int!
+  _all: Int!
+}
+
+type BoardCount {
+  threads: Int!
+  posts: Int!
+}
+
+type BoardMaxAggregate {
+  id: String
+  code: String
+  title: String
+  description: String
+  namespace: String
+  provider: String
+}
+
+type BoardMinAggregate {
+  id: String
+  code: String
+  title: String
+  description: String
+  namespace: String
+  provider: String
+}
+
+type Board {
+  id: ID!
+  code: String!
+  title: String!
+  description: String!
+  namespace: String!
+  provider: String!
+  threads: [Thread!]
+  posts: [Post!]
+  _count: BoardCount!
+}
+
+type PostAvgAggregate {
+  no: Float
+}
+
+type PostCountAggregate {
+  id: Int!
+  no: Int!
+  author: Int!
+  title: Int!
+  content: Int!
+  createdAt: Int!
+  threadId: Int!
+  boardId: Int!
+  _all: Int!
+}
+
+type PostCount {
+  attachments: Int!
+}
+
+type PostMaxAggregate {
+  id: String
+  no: Int
+  author: String
+  title: String
+  content: String
+  createdAt: DateTime
+  threadId: String
+  boardId: String
+}
+
+type PostMinAggregate {
+  id: String
+  no: Int
+  author: String
+  title: String
+  content: String
+  createdAt: DateTime
+  threadId: String
+  boardId: String
+}
+
+type PostSumAggregate {
+  no: Int
+}
+
+type Post {
+  id: ID!
+  no: Int!
+  author: String!
+  title: String
+  content: String
+  createdAt: DateTime!
+  threadId: String
+  boardId: String
+  attachments: [Attachment!]
+  thread: Thread
+  board: Board
+  _count: PostCount!
+}
+
+type StatisticAvgAggregate {
+  id: Float
+  threadCount: Float
+  postCount: Float
+  attachmentCount: Float
+  totalSize: Float
+}
+
+type StatisticCountAggregate {
+  id: Int!
+  threadCount: Int!
+  postCount: Int!
+  attachmentCount: Int!
+  totalSize: Int!
+  createdAt: Int!
+  _all: Int!
+}
+
+type StatisticMaxAggregate {
+  id: Int
+  threadCount: Int
+  postCount: Int
+  attachmentCount: Int
+  totalSize: BigInt
+  createdAt: DateTime
+}
+
+type StatisticMinAggregate {
+  id: Int
+  threadCount: Int
+  postCount: Int
+  attachmentCount: Int
+  totalSize: BigInt
+  createdAt: DateTime
+}
+
+type StatisticSumAggregate {
+  id: Int
+  threadCount: Int
+  postCount: Int
+  attachmentCount: Int
+  totalSize: BigInt
+}
+
+type Statistic {
+  id: ID!
+  threadCount: Int!
+  postCount: Int!
+  attachmentCount: Int!
+  totalSize: BigInt!
+  createdAt: DateTime!
+}
+
+type ThreadAvgAggregate {
+  no: Float
+}
+
+type ThreadCountAggregate {
+  id: Int!
+  no: Int!
+  author: Int!
+  title: Int!
+  content: Int!
+  createdAt: Int!
+  bumpedAt: Int!
+  isArchived: Int!
+  boardId: Int!
+  _all: Int!
+}
+
+type ThreadCount {
+  watchers: Int!
+  attachments: Int!
+  posts: Int!
+  watcherThreads: Int!
+}
+
+type ThreadMaxAggregate {
+  id: String
+  no: Int
+  author: String
+  title: String
+  content: String
+  createdAt: DateTime
+  bumpedAt: DateTime
+  isArchived: Boolean
+  boardId: String
+}
+
+type ThreadMinAggregate {
+  id: String
+  no: Int
+  author: String
+  title: String
+  content: String
+  createdAt: DateTime
+  bumpedAt: DateTime
+  isArchived: Boolean
+  boardId: String
+}
+
+type ThreadSumAggregate {
+  no: Int
+}
+
+type Thread {
+  id: ID!
+  no: Int!
+  author: String!
+  title: String
+  content: String
+  createdAt: DateTime!
+  bumpedAt: DateTime
+  isArchived: Boolean!
+  boardId: String!
+  watchers(where: WatcherWhereInput, orderBy: [WatcherOrderByWithRelationInput!], cursor: WatcherWhereUniqueInput, take: Int, skip: Int, distinct: [WatcherScalarFieldEnum!]): [Watcher!]
+  attachments(where: AttachmentWhereInput, orderBy: [AttachmentOrderByWithRelationInput!], cursor: AttachmentWhereUniqueInput, take: Int, skip: Int, distinct: [AttachmentScalarFieldEnum!]): [Attachment!]
+  posts(where: PostWhereInput, orderBy: [PostOrderByWithRelationInput!], cursor: PostWhereUniqueInput, take: Int, skip: Int, distinct: [PostScalarFieldEnum!]): [Post!]
+  watcherThreads: [WatcherThread!]
+  board: Board!
+  _count: ThreadCount!
+  attachmentCount: Int!
+}
+
+input WatcherWhereInput {
+  AND: [WatcherWhereInput!]
+  OR: [WatcherWhereInput!]
+  NOT: [WatcherWhereInput!]
+  id: IntFilter
+  name: StringFilter
+  type: StringFilter
+  threads: ThreadListRelationFilter
+  attachments: AttachmentListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input ThreadListRelationFilter {
+  every: ThreadWhereInput
+  some: ThreadWhereInput
+  none: ThreadWhereInput
+}
+
+input ThreadWhereInput {
+  AND: [ThreadWhereInput!]
+  OR: [ThreadWhereInput!]
+  NOT: [ThreadWhereInput!]
+  id: StringFilter
+  no: IntFilter
+  author: StringFilter
+  title: StringNullableFilter
+  content: StringNullableFilter
+  createdAt: DateTimeFilter
+  bumpedAt: DateTimeNullableFilter
+  isArchived: BoolFilter
+  boardId: StringFilter
+  watchers: WatcherListRelationFilter
+  attachments: AttachmentListRelationFilter
+  posts: PostListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
+  board: BoardScalarRelationFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeNullableFilter
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeNullableFilter
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input WatcherListRelationFilter {
+  every: WatcherWhereInput
+  some: WatcherWhereInput
+  none: WatcherWhereInput
+}
+
+input AttachmentListRelationFilter {
+  every: AttachmentWhereInput
+  some: AttachmentWhereInput
+  none: AttachmentWhereInput
+}
+
+input AttachmentWhereInput {
+  AND: [AttachmentWhereInput!]
+  OR: [AttachmentWhereInput!]
+  NOT: [AttachmentWhereInput!]
+  id: StringFilter
+  uuid: StringFilter
+  name: StringFilter
+  width: IntFilter
+  height: IntFilter
+  size: IntNullableFilter
+  extension: StringFilter
+  mime: StringNullableFilter
+  hash: StringNullableFilter
+  createdAt: DateTimeFilter
+  timestamp: BigIntNullableFilter
+  filePath: StringNullableFilter
+  thumbnailWidth: IntNullableFilter
+  thumbnailHeight: IntNullableFilter
+  thumbnailFilePath: StringNullableFilter
+  threads: ThreadListRelationFilter
+  posts: PostListRelationFilter
+  watchers: WatcherListRelationFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+input BigIntNullableFilter {
+  equals: BigInt
+  in: [BigInt!]
+  notIn: [BigInt!]
+  lt: BigInt
+  lte: BigInt
+  gt: BigInt
+  gte: BigInt
+  not: NestedBigIntNullableFilter
+}
+
+input NestedBigIntNullableFilter {
+  equals: BigInt
+  in: [BigInt!]
+  notIn: [BigInt!]
+  lt: BigInt
+  lte: BigInt
+  gt: BigInt
+  gte: BigInt
+  not: NestedBigIntNullableFilter
+}
+
+input PostListRelationFilter {
+  every: PostWhereInput
+  some: PostWhereInput
+  none: PostWhereInput
+}
+
+input PostWhereInput {
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+  id: StringFilter
+  no: IntFilter
+  author: StringFilter
+  title: StringNullableFilter
+  content: StringNullableFilter
+  createdAt: DateTimeFilter
+  threadId: StringNullableFilter
+  boardId: StringNullableFilter
+  attachments: AttachmentListRelationFilter
+  thread: ThreadNullableScalarRelationFilter
+  board: BoardNullableScalarRelationFilter
+}
+
+input ThreadNullableScalarRelationFilter {
+  is: ThreadWhereInput
+  isNot: ThreadWhereInput
+}
+
+input BoardNullableScalarRelationFilter {
+  is: BoardWhereInput
+  isNot: BoardWhereInput
+}
+
+input BoardWhereInput {
+  AND: [BoardWhereInput!]
+  OR: [BoardWhereInput!]
+  NOT: [BoardWhereInput!]
+  id: StringFilter
+  code: StringFilter
+  title: StringFilter
+  description: StringFilter
+  namespace: StringFilter
+  provider: StringFilter
+  threads: ThreadListRelationFilter
+  posts: PostListRelationFilter
+}
+
+input WatcherThreadListRelationFilter {
+  every: WatcherThreadWhereInput
+  some: WatcherThreadWhereInput
+  none: WatcherThreadWhereInput
+}
+
+input WatcherThreadWhereInput {
+  AND: [WatcherThreadWhereInput!]
+  OR: [WatcherThreadWhereInput!]
+  NOT: [WatcherThreadWhereInput!]
+  id: IntFilter
+  url: StringFilter
+  isArchived: BoolFilter
+  watcherId: IntFilter
+  threadId: StringNullableFilter
+  watcher: WatcherScalarRelationFilter
+  thread: ThreadNullableScalarRelationFilter
+}
+
+input WatcherScalarRelationFilter {
+  is: WatcherWhereInput
+  isNot: WatcherWhereInput
+}
+
+input BoardScalarRelationFilter {
+  is: BoardWhereInput
+  isNot: BoardWhereInput
+}
+
+input WatcherOrderByWithRelationInput {
+  id: SortOrder
+  name: SortOrder
+  type: SortOrder
+  threads: ThreadOrderByRelationAggregateInput
+  attachments: AttachmentOrderByRelationAggregateInput
+  watcherThreads: WatcherThreadOrderByRelationAggregateInput
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input ThreadOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input AttachmentOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input WatcherThreadOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input WatcherWhereUniqueInput {
+  id: Int
+  AND: [WatcherWhereInput!]
+  OR: [WatcherWhereInput!]
+  NOT: [WatcherWhereInput!]
+  name: StringFilter
+  type: StringFilter
+  threads: ThreadListRelationFilter
+  attachments: AttachmentListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
+}
+
+enum WatcherScalarFieldEnum {
+  id
+  name
+  type
+}
+
+input AttachmentOrderByWithRelationInput {
+  id: SortOrder
+  uuid: SortOrder
+  name: SortOrder
+  width: SortOrder
+  height: SortOrder
+  size: SortOrderInput
+  extension: SortOrder
+  mime: SortOrderInput
+  hash: SortOrderInput
+  createdAt: SortOrder
+  timestamp: SortOrderInput
+  filePath: SortOrderInput
+  thumbnailWidth: SortOrderInput
+  thumbnailHeight: SortOrderInput
+  thumbnailFilePath: SortOrderInput
+  threads: ThreadOrderByRelationAggregateInput
+  posts: PostOrderByRelationAggregateInput
+  watchers: WatcherOrderByRelationAggregateInput
+}
+
+input SortOrderInput {
+  sort: SortOrder!
+  nulls: NullsOrder
+}
+
+enum NullsOrder {
+  first
+  last
+}
+
+input PostOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input WatcherOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input AttachmentWhereUniqueInput {
+  id: String
+  uuid: String
+  AND: [AttachmentWhereInput!]
+  OR: [AttachmentWhereInput!]
+  NOT: [AttachmentWhereInput!]
+  name: StringFilter
+  width: IntFilter
+  height: IntFilter
+  size: IntNullableFilter
+  extension: StringFilter
+  mime: StringNullableFilter
+  hash: StringNullableFilter
+  createdAt: DateTimeFilter
+  timestamp: BigIntNullableFilter
+  filePath: StringNullableFilter
+  thumbnailWidth: IntNullableFilter
+  thumbnailHeight: IntNullableFilter
+  thumbnailFilePath: StringNullableFilter
+  threads: ThreadListRelationFilter
+  posts: PostListRelationFilter
+  watchers: WatcherListRelationFilter
+}
+
+enum AttachmentScalarFieldEnum {
+  id
+  uuid
+  name
+  width
+  height
+  size
+  extension
+  mime
+  hash
+  createdAt
+  timestamp
+  filePath
+  thumbnailWidth
+  thumbnailHeight
+  thumbnailFilePath
+}
+
+input PostOrderByWithRelationInput {
+  id: SortOrder
+  no: SortOrder
+  author: SortOrder
+  title: SortOrderInput
+  content: SortOrderInput
+  createdAt: SortOrder
+  threadId: SortOrderInput
+  boardId: SortOrderInput
+  attachments: AttachmentOrderByRelationAggregateInput
+  thread: ThreadOrderByWithRelationInput
+  board: BoardOrderByWithRelationInput
+}
+
+input ThreadOrderByWithRelationInput {
+  id: SortOrder
+  no: SortOrder
+  author: SortOrder
+  title: SortOrderInput
+  content: SortOrderInput
+  createdAt: SortOrder
+  bumpedAt: SortOrderInput
+  isArchived: SortOrder
+  boardId: SortOrder
+  watchers: WatcherOrderByRelationAggregateInput
+  attachments: AttachmentOrderByRelationAggregateInput
+  posts: PostOrderByRelationAggregateInput
+  watcherThreads: WatcherThreadOrderByRelationAggregateInput
+  board: BoardOrderByWithRelationInput
+}
+
+input BoardOrderByWithRelationInput {
+  id: SortOrder
+  code: SortOrder
+  title: SortOrder
+  description: SortOrder
+  namespace: SortOrder
+  provider: SortOrder
+  threads: ThreadOrderByRelationAggregateInput
+  posts: PostOrderByRelationAggregateInput
+}
+
+input PostWhereUniqueInput {
+  id: String
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+  no: IntFilter
+  author: StringFilter
+  title: StringNullableFilter
+  content: StringNullableFilter
+  createdAt: DateTimeFilter
+  threadId: StringNullableFilter
+  boardId: StringNullableFilter
+  attachments: AttachmentListRelationFilter
+  thread: ThreadNullableScalarRelationFilter
+  board: BoardNullableScalarRelationFilter
+}
+
+enum PostScalarFieldEnum {
+  id
+  no
+  author
+  title
+  content
+  createdAt
+  threadId
+  boardId
+}
+
+type WatcherAvgAggregate {
+  id: Float
+}
+
+type WatcherCountAggregate {
+  id: Int!
+  name: Int!
+  type: Int!
+  _all: Int!
+}
+
+type WatcherCount {
+  threads: Int!
+  attachments: Int!
+  watcherThreads: Int!
+}
+
+type WatcherMaxAggregate {
+  id: Int
+  name: String
+  type: String
+}
+
+type WatcherMinAggregate {
+  id: Int
+  name: String
+  type: String
+}
+
+type WatcherSumAggregate {
+  id: Int
+}
+
+type Watcher {
+  id: ID!
+  name: String!
+  type: String!
+  threads(where: ThreadWhereInput, orderBy: [ThreadOrderByWithRelationInput!], cursor: ThreadWhereUniqueInput, take: Int, skip: Int, distinct: [ThreadScalarFieldEnum!]): [Thread!]
+  attachments(where: AttachmentWhereInput, orderBy: [AttachmentOrderByWithRelationInput!], cursor: AttachmentWhereUniqueInput, take: Int, skip: Int, distinct: [AttachmentScalarFieldEnum!]): [Attachment!]
+  watcherThreads: [WatcherThread!]
+  _count: WatcherCount!
+}
+
+input ThreadWhereUniqueInput {
+  id: String
+  AND: [ThreadWhereInput!]
+  OR: [ThreadWhereInput!]
+  NOT: [ThreadWhereInput!]
+  no: IntFilter
+  author: StringFilter
+  title: StringNullableFilter
+  content: StringNullableFilter
+  createdAt: DateTimeFilter
+  bumpedAt: DateTimeNullableFilter
+  isArchived: BoolFilter
+  boardId: StringFilter
+  watchers: WatcherListRelationFilter
+  attachments: AttachmentListRelationFilter
+  posts: PostListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
+  board: BoardScalarRelationFilter
+}
+
+enum ThreadScalarFieldEnum {
+  id
+  no
+  author
+  title
+  content
+  createdAt
+  bumpedAt
+  isArchived
+  boardId
+}
+
+type WatcherThreadAvgAggregate {
+  id: Float
+  watcherId: Float
+}
+
+type WatcherThreadCountAggregate {
+  id: Int!
+  url: Int!
+  isArchived: Int!
+  watcherId: Int!
+  threadId: Int!
+  _all: Int!
+}
+
+type WatcherThreadMaxAggregate {
+  id: Int
+  url: String
+  isArchived: Boolean
+  watcherId: Int
+  threadId: String
+}
+
+type WatcherThreadMinAggregate {
+  id: Int
+  url: String
+  isArchived: Boolean
+  watcherId: Int
+  threadId: String
+}
+
+type WatcherThreadSumAggregate {
+  id: Int
+  watcherId: Int
+}
+
+type WatcherThread {
+  id: ID!
+  url: String!
+  isArchived: Boolean!
+  watcherId: Int!
+  threadId: String
+  watcher: Watcher!
+  thread: Thread
+}
+
+type Query {
+  watcherCount: Int!
+  watcher(where: WatcherWhereUniqueInput!): Watcher
+  watchers(where: WatcherWhereInput, orderBy: [WatcherOrderByWithRelationInput!], cursor: WatcherWhereUniqueInput, take: Int, skip: Int, distinct: [WatcherScalarFieldEnum!]): [Watcher!]!
+  threadCount: Int!
+  thread(where: ThreadWhereUniqueInput!): Thread
+  threads(where: ThreadWhereInput, orderBy: [ThreadOrderByWithRelationInput!], cursor: ThreadWhereUniqueInput, take: Int, skip: Int, distinct: [ThreadScalarFieldEnum!]): [Thread!]!
+  attachmentCount: Int!
+  totalSize: BigInt!
+  attachment(where: AttachmentWhereUniqueInput!): Attachment!
+  attachments(where: AttachmentWhereInput, orderBy: [AttachmentOrderByWithRelationInput!], cursor: AttachmentWhereUniqueInput, take: Int, skip: Int, distinct: [AttachmentScalarFieldEnum!]): [Attachment!]!
+  postCount: Int!
+  post(where: PostWhereUniqueInput!): Post!
+  posts(where: PostWhereInput, orderBy: [PostOrderByWithRelationInput!], cursor: PostWhereUniqueInput, take: Int, skip: Int, distinct: [PostScalarFieldEnum!]): [Post!]!
+  _count: PostCount!
+  boardCount: Int!
+  board(where: BoardWhereUniqueInput!): Board!
+  boards(where: BoardWhereInput, orderBy: [BoardOrderByWithRelationInput!], cursor: BoardWhereUniqueInput, take: Int, skip: Int, distinct: [BoardScalarFieldEnum!]): [Board!]!
+  statistics(where: StatisticWhereInput, orderBy: [StatisticOrderByWithRelationInput!], cursor: StatisticWhereUniqueInput, take: Int, skip: Int, distinct: [StatisticScalarFieldEnum!]): [Statistic!]!
+}
+
+input BoardWhereUniqueInput {
+  id: String
+  AND: [BoardWhereInput!]
+  OR: [BoardWhereInput!]
+  NOT: [BoardWhereInput!]
+  code: StringFilter
+  title: StringFilter
+  description: StringFilter
+  namespace: StringFilter
+  provider: StringFilter
+  threads: ThreadListRelationFilter
+  posts: PostListRelationFilter
+}
+
+enum BoardScalarFieldEnum {
+  id
+  code
+  title
+  description
+  namespace
+  provider
+}
+
+input StatisticWhereInput {
+  AND: [StatisticWhereInput!]
+  OR: [StatisticWhereInput!]
+  NOT: [StatisticWhereInput!]
+  id: IntFilter
+  threadCount: IntFilter
+  postCount: IntFilter
+  attachmentCount: IntFilter
+  totalSize: BigIntFilter
+  createdAt: DateTimeFilter
+}
+
+input BigIntFilter {
+  equals: BigInt
+  in: [BigInt!]
+  notIn: [BigInt!]
+  lt: BigInt
+  lte: BigInt
+  gt: BigInt
+  gte: BigInt
+  not: NestedBigIntFilter
+}
+
+input NestedBigIntFilter {
+  equals: BigInt
+  in: [BigInt!]
+  notIn: [BigInt!]
+  lt: BigInt
+  lte: BigInt
+  gt: BigInt
+  gte: BigInt
+  not: NestedBigIntFilter
+}
+
+input StatisticOrderByWithRelationInput {
+  id: SortOrder
+  threadCount: SortOrder
+  postCount: SortOrder
+  attachmentCount: SortOrder
+  totalSize: SortOrder
+  createdAt: SortOrder
+}
+
+input StatisticWhereUniqueInput {
+  id: Int
+  AND: [StatisticWhereInput!]
+  OR: [StatisticWhereInput!]
+  NOT: [StatisticWhereInput!]
+  threadCount: IntFilter
+  postCount: IntFilter
+  attachmentCount: IntFilter
+  totalSize: BigIntFilter
+  createdAt: DateTimeFilter
+}
+
+enum StatisticScalarFieldEnum {
+  id
+  threadCount
+  postCount
+  attachmentCount
+  totalSize
+  createdAt
+}
+
+type Mutation {
+  registerWatcherThread(url: String!, watcherId: Int!): Boolean!
+}

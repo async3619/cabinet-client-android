@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev, dev-stage ]
+    tags-ignore:
+      - '*'
+
+  pull_request:
+    branches: [ main, dev, dev-stage ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.11.0'
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Flutter action
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run build_runner
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze static code
+        run: flutter analyze
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Sign app APK
+        uses: r0adkll/sign-android-release@v1
+        if: steps.semantic.outputs.new_release_published == 'true'
+        id: sign_app
+        with:
+          releaseDirectory: build/app/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY_BASE54 }}
+          alias: ${{ secrets.SIGNING_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      - name: Upload APK
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/app/outputs/apk/release/*.apk
+          tag: ${{ format('v{0}', steps.semantic.outputs.new_release_version) }}
+          overwrite: true
+          file_glob: true
+
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
