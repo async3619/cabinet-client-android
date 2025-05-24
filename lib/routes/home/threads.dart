@@ -25,11 +25,11 @@ class ThreadsTab extends StatefulWidget {
 
 class _ThreadsTabState extends State<ThreadsTab> {
   final Map<ThreadSortOption, String> _sortOptionLabels = {
-    ThreadSortOption.BumpOrder: 'Bump Order',
-    ThreadSortOption.ReplyCount: 'Reply Count',
-    ThreadSortOption.ImageCount: 'Image Count',
-    ThreadSortOption.Newest: 'Newest',
-    ThreadSortOption.Oldest: 'Oldest',
+    ThreadSortOption.bumpOrder: 'Bump Order',
+    ThreadSortOption.replyCount: 'Reply Count',
+    ThreadSortOption.imageCount: 'Image Count',
+    ThreadSortOption.newest: 'Newest',
+    ThreadSortOption.oldest: 'Oldest',
   };
 
   ThreadSortOption? _sortOption;
@@ -41,7 +41,7 @@ class _ThreadsTabState extends State<ThreadsTab> {
     // Initialize the sort option from the config
     _sortOption =
         Provider.of<ConfigModel>(context, listen: false).threadSortOption ??
-        ThreadSortOption.BumpOrder;
+        ThreadSortOption.bumpOrder;
   }
 
   handleThreadTap(Fragment$MinimalThread thread) {
@@ -121,22 +121,22 @@ class _ThreadsTabState extends State<ThreadsTab> {
 
         sortedThreads.sort((a, b) {
           switch (_sortOption) {
-            case ThreadSortOption.BumpOrder:
+            case ThreadSortOption.bumpOrder:
               final aBumpedAt = a.bumpedAt ?? a.createdAt;
               final bBumpedAt = b.bumpedAt ?? b.createdAt;
 
               return bBumpedAt.compareTo(aBumpedAt);
 
-            case ThreadSortOption.ReplyCount:
+            case ThreadSortOption.replyCount:
               return b.$_count.posts.compareTo(a.$_count.posts);
 
-            case ThreadSortOption.ImageCount:
+            case ThreadSortOption.imageCount:
               return b.attachmentCount.compareTo(a.attachmentCount);
 
-            case ThreadSortOption.Newest:
+            case ThreadSortOption.newest:
               return b.createdAt.compareTo(a.createdAt);
 
-            case ThreadSortOption.Oldest:
+            case ThreadSortOption.oldest:
               return a.createdAt.compareTo(b.createdAt);
 
             default:

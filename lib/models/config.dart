@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum ThreadSortOption { BumpOrder, ReplyCount, ImageCount, Newest, Oldest }
+enum ThreadSortOption { bumpOrder, replyCount, imageCount, newest, oldest }
 
 class ConfigModel extends ChangeNotifier {
   String? _serverUrl;
@@ -22,10 +22,10 @@ class ConfigModel extends ChangeNotifier {
         );
       } catch (e) {
         // If the value is not a valid ThreadSortOption, default to BumpOrder
-        _threadSortOption = ThreadSortOption.BumpOrder;
+        _threadSortOption = ThreadSortOption.bumpOrder;
       }
     } else {
-      _threadSortOption = ThreadSortOption.BumpOrder; // Default value
+      _threadSortOption = ThreadSortOption.bumpOrder; // Default value
     }
 
     notifyListeners();
