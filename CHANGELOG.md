@@ -1,3 +1,9 @@
+## [1.0.0-dev.13](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.12...v1.0.0-dev.13) (2025-05-24)
+
+### Features ✨
+
+* **threads:** make thread transparent when its all read ([#30](https://github.com/async3619/cabinet-client-android/issues/30)) ([fab6f7f](https://github.com/async3619/cabinet-client-android/commit/fab6f7fb5f32439789353084d35c3e09a5f83401))
+
 ## [1.0.0-dev.12](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.11...v1.0.0-dev.12) (2025-05-24)
 
 ### Features ✨
