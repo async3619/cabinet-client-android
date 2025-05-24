@@ -120,6 +120,15 @@ class ThreadGridItem extends StatelessWidget {
                         color: Theme.of(context).cardColor,
                         child: Row(
                           children: [
+                            if (thread.isArchived)
+                              Icon(
+                                Icons.cabin,
+                                size: 14,
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium!.color,
+                              ),
                             Expanded(child: Container()),
                             Text(
                               '${thread.$_count.posts}R ${thread.attachmentCount}I',
