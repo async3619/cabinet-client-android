@@ -1,3 +1,9 @@
+## [1.0.0-dev.11](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.10...v1.0.0-dev.11) (2025-05-24)
+
+### Features ✨
+
+* **threads:** add archived icon to thread list view item ([#25](https://github.com/async3619/cabinet-client-android/issues/25)) ([bf77701](https://github.com/async3619/cabinet-client-android/commit/bf777013ac4888bbcb1de522760af074c20ea4a4))
+
 ## [1.0.0-dev.10](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.9...v1.0.0-dev.10) (2025-05-22)
 
 ### Features ✨
