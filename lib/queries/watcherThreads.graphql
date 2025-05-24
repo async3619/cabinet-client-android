@@ -23,6 +23,7 @@ fragment MinimalThread on Thread {
   content
   createdAt
   attachmentCount
+  isArchived
 
   attachments {
     ...FullAttachment

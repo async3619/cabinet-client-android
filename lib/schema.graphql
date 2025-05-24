@@ -159,42 +159,6 @@ type Board {
   _count: BoardCount!
 }
 
-type ExcludedThreadAvgAggregate {
-  id: Float
-  watcherId: Float
-}
-
-type ExcludedThreadCountAggregate {
-  id: Int!
-  threadId: Int!
-  watcherId: Int!
-  _all: Int!
-}
-
-type ExcludedThreadMaxAggregate {
-  id: Int
-  threadId: String
-  watcherId: Int
-}
-
-type ExcludedThreadMinAggregate {
-  id: Int
-  threadId: String
-  watcherId: Int
-}
-
-type ExcludedThreadSumAggregate {
-  id: Int
-  watcherId: Int
-}
-
-type ExcludedThread {
-  id: ID!
-  threadId: String!
-  watcherId: Int
-  watcher: Watcher
-}
-
 type PostAvgAggregate {
   no: Float
 }
@@ -320,6 +284,8 @@ type ThreadCountAggregate {
   title: Int!
   content: Int!
   createdAt: Int!
+  bumpedAt: Int!
+  isArchived: Int!
   boardId: Int!
   _all: Int!
 }
@@ -328,6 +294,7 @@ type ThreadCount {
   watchers: Int!
   attachments: Int!
   posts: Int!
+  watcherThreads: Int!
 }
 
 type ThreadMaxAggregate {
@@ -337,6 +304,8 @@ type ThreadMaxAggregate {
   title: String
   content: String
   createdAt: DateTime
+  bumpedAt: DateTime
+  isArchived: Boolean
   boardId: String
 }
 
@@ -347,6 +316,8 @@ type ThreadMinAggregate {
   title: String
   content: String
   createdAt: DateTime
+  bumpedAt: DateTime
+  isArchived: Boolean
   boardId: String
 }
 
@@ -361,10 +332,13 @@ type Thread {
   title: String
   content: String
   createdAt: DateTime!
+  bumpedAt: DateTime
+  isArchived: Boolean!
   boardId: String!
   watchers(where: WatcherWhereInput, orderBy: [WatcherOrderByWithRelationInput!], cursor: WatcherWhereUniqueInput, take: Int, skip: Int, distinct: [WatcherScalarFieldEnum!]): [Watcher!]
   attachments(where: AttachmentWhereInput, orderBy: [AttachmentOrderByWithRelationInput!], cursor: AttachmentWhereUniqueInput, take: Int, skip: Int, distinct: [AttachmentScalarFieldEnum!]): [Attachment!]
   posts(where: PostWhereInput, orderBy: [PostOrderByWithRelationInput!], cursor: PostWhereUniqueInput, take: Int, skip: Int, distinct: [PostScalarFieldEnum!]): [Post!]
+  watcherThreads: [WatcherThread!]
   board: Board!
   _count: ThreadCount!
   attachmentCount: Int!
@@ -379,7 +353,7 @@ input WatcherWhereInput {
   type: StringFilter
   threads: ThreadListRelationFilter
   attachments: AttachmentListRelationFilter
-  excludedThreads: ExcludedThreadListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
 }
 
 input IntFilter {
@@ -448,10 +422,13 @@ input ThreadWhereInput {
   title: StringNullableFilter
   content: StringNullableFilter
   createdAt: DateTimeFilter
+  bumpedAt: DateTimeNullableFilter
+  isArchived: BoolFilter
   boardId: StringFilter
   watchers: WatcherListRelationFilter
   attachments: AttachmentListRelationFilter
   posts: PostListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
   board: BoardScalarRelationFilter
 }
 
@@ -503,6 +480,38 @@ input NestedDateTimeFilter {
   gt: DateTime
   gte: DateTime
   not: NestedDateTimeFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeNullableFilter
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: NestedDateTimeNullableFilter
+}
+
+input BoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
+}
+
+input NestedBoolFilter {
+  equals: Boolean
+  not: NestedBoolFilter
 }
 
 input WatcherListRelationFilter {
@@ -632,30 +641,33 @@ input BoardWhereInput {
   posts: PostListRelationFilter
 }
 
+input WatcherThreadListRelationFilter {
+  every: WatcherThreadWhereInput
+  some: WatcherThreadWhereInput
+  none: WatcherThreadWhereInput
+}
+
+input WatcherThreadWhereInput {
+  AND: [WatcherThreadWhereInput!]
+  OR: [WatcherThreadWhereInput!]
+  NOT: [WatcherThreadWhereInput!]
+  id: IntFilter
+  url: StringFilter
+  isArchived: BoolFilter
+  watcherId: IntFilter
+  threadId: StringNullableFilter
+  watcher: WatcherScalarRelationFilter
+  thread: ThreadNullableScalarRelationFilter
+}
+
+input WatcherScalarRelationFilter {
+  is: WatcherWhereInput
+  isNot: WatcherWhereInput
+}
+
 input BoardScalarRelationFilter {
   is: BoardWhereInput
   isNot: BoardWhereInput
-}
-
-input ExcludedThreadListRelationFilter {
-  every: ExcludedThreadWhereInput
-  some: ExcludedThreadWhereInput
-  none: ExcludedThreadWhereInput
-}
-
-input ExcludedThreadWhereInput {
-  AND: [ExcludedThreadWhereInput!]
-  OR: [ExcludedThreadWhereInput!]
-  NOT: [ExcludedThreadWhereInput!]
-  id: IntFilter
-  threadId: StringFilter
-  watcherId: IntNullableFilter
-  watcher: WatcherNullableScalarRelationFilter
-}
-
-input WatcherNullableScalarRelationFilter {
-  is: WatcherWhereInput
-  isNot: WatcherWhereInput
 }
 
 input WatcherOrderByWithRelationInput {
@@ -664,7 +676,7 @@ input WatcherOrderByWithRelationInput {
   type: SortOrder
   threads: ThreadOrderByRelationAggregateInput
   attachments: AttachmentOrderByRelationAggregateInput
-  excludedThreads: ExcludedThreadOrderByRelationAggregateInput
+  watcherThreads: WatcherThreadOrderByRelationAggregateInput
 }
 
 enum SortOrder {
@@ -680,7 +692,7 @@ input AttachmentOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
-input ExcludedThreadOrderByRelationAggregateInput {
+input WatcherThreadOrderByRelationAggregateInput {
   _count: SortOrder
 }
 
@@ -693,7 +705,7 @@ input WatcherWhereUniqueInput {
   type: StringFilter
   threads: ThreadListRelationFilter
   attachments: AttachmentListRelationFilter
-  excludedThreads: ExcludedThreadListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
 }
 
 enum WatcherScalarFieldEnum {
@@ -804,10 +816,13 @@ input ThreadOrderByWithRelationInput {
   title: SortOrderInput
   content: SortOrderInput
   createdAt: SortOrder
+  bumpedAt: SortOrderInput
+  isArchived: SortOrder
   boardId: SortOrder
   watchers: WatcherOrderByRelationAggregateInput
   attachments: AttachmentOrderByRelationAggregateInput
   posts: PostOrderByRelationAggregateInput
+  watcherThreads: WatcherThreadOrderByRelationAggregateInput
   board: BoardOrderByWithRelationInput
 }
 
@@ -864,7 +879,7 @@ type WatcherCountAggregate {
 type WatcherCount {
   threads: Int!
   attachments: Int!
-  excludedThreads: Int!
+  watcherThreads: Int!
 }
 
 type WatcherMaxAggregate {
@@ -889,7 +904,7 @@ type Watcher {
   type: String!
   threads(where: ThreadWhereInput, orderBy: [ThreadOrderByWithRelationInput!], cursor: ThreadWhereUniqueInput, take: Int, skip: Int, distinct: [ThreadScalarFieldEnum!]): [Thread!]
   attachments(where: AttachmentWhereInput, orderBy: [AttachmentOrderByWithRelationInput!], cursor: AttachmentWhereUniqueInput, take: Int, skip: Int, distinct: [AttachmentScalarFieldEnum!]): [Attachment!]
-  excludedThreads: [ExcludedThread!]
+  watcherThreads: [WatcherThread!]
   _count: WatcherCount!
 }
 
@@ -903,10 +918,13 @@ input ThreadWhereUniqueInput {
   title: StringNullableFilter
   content: StringNullableFilter
   createdAt: DateTimeFilter
+  bumpedAt: DateTimeNullableFilter
+  isArchived: BoolFilter
   boardId: StringFilter
   watchers: WatcherListRelationFilter
   attachments: AttachmentListRelationFilter
   posts: PostListRelationFilter
+  watcherThreads: WatcherThreadListRelationFilter
   board: BoardScalarRelationFilter
 }
 
@@ -917,7 +935,54 @@ enum ThreadScalarFieldEnum {
   title
   content
   createdAt
+  bumpedAt
+  isArchived
   boardId
+}
+
+type WatcherThreadAvgAggregate {
+  id: Float
+  watcherId: Float
+}
+
+type WatcherThreadCountAggregate {
+  id: Int!
+  url: Int!
+  isArchived: Int!
+  watcherId: Int!
+  threadId: Int!
+  _all: Int!
+}
+
+type WatcherThreadMaxAggregate {
+  id: Int
+  url: String
+  isArchived: Boolean
+  watcherId: Int
+  threadId: String
+}
+
+type WatcherThreadMinAggregate {
+  id: Int
+  url: String
+  isArchived: Boolean
+  watcherId: Int
+  threadId: String
+}
+
+type WatcherThreadSumAggregate {
+  id: Int
+  watcherId: Int
+}
+
+type WatcherThread {
+  id: ID!
+  url: String!
+  isArchived: Boolean!
+  watcherId: Int!
+  threadId: String
+  watcher: Watcher!
+  thread: Thread
 }
 
 type Query {
@@ -1029,5 +1094,5 @@ enum StatisticScalarFieldEnum {
 }
 
 type Mutation {
-  excludeThreadFromWatcher(threadId: String!, watcherId: Int!): Boolean!
+  registerWatcherThread(url: String!, watcherId: Int!): Boolean!
 }
