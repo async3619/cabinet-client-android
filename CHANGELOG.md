@@ -1,3 +1,9 @@
+## [1.0.0-dev.12](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.11...v1.0.0-dev.12) (2025-05-24)
+
+### Features ✨
+
+* **threads:** implement thread sort option feature ([#27](https://github.com/async3619/cabinet-client-android/issues/27)) ([dbfc598](https://github.com/async3619/cabinet-client-android/commit/dbfc5981776ee9d3f80791689812fd1ad66493d1))
+
 ## [1.0.0-dev.11](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.10...v1.0.0-dev.11) (2025-05-24)
 
 ### Features ✨
