@@ -1,4 +1,5 @@
 import 'package:cabinet/queries/statistic.graphql.dart';
+import 'package:cabinet/widgets/app_bar/title.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,8 +7,7 @@ import 'package:intl/intl.dart';
 class StatisticsTab extends StatelessWidget {
   const StatisticsTab({super.key});
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildBody() {
     final formatter = NumberFormat('###,###,###,###');
 
     return Scaffold(
@@ -62,6 +62,16 @@ class StatisticsTab extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TitleAppBar(title: "Statistics"),
+        Expanded(child: buildBody()),
+      ],
     );
   }
 }
