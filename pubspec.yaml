@@ -55,6 +55,7 @@ dependencies:
   objectbox: ^4.2.0
   objectbox_flutter_libs: any
   path: ^1.9.1
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ThreadGrid extends StatefulWidget {
   final Function(Fragment$MinimalThread)? onThreadTap;
   final List<Fragment$MinimalThread> threads;
-  final List<ThreadReadStatus>? readStatus;
+  final Map<String, ThreadReadStatus>? readStatus;
 
   const ThreadGrid({
     super.key,
@@ -23,7 +23,7 @@ class _ThreadGridState extends State<ThreadGrid> {
   @override
   Widget build(BuildContext context) {
     final threads = widget.threads;
-    final readStatus = widget.readStatus ?? [];
+    final readStatus = widget.readStatus ?? {};
 
     return GridView(
       padding: EdgeInsets.zero,
@@ -31,19 +31,21 @@ class _ThreadGridState extends State<ThreadGrid> {
         crossAxisCount: 3,
         childAspectRatio: 3 / 5,
       ),
-      children: List.generate(
-        threads.length,
-        (index) => Opacity(
-          opacity:
-              readStatus.any((status) => status.threadId == threads[index].id)
-                  ? 0.5
-                  : 1.0,
+      children: List.generate(threads.length, (index) {
+        final threadId = threads[index].id;
+        final isRead =
+            readStatus[threadId] != null &&
+            readStatus[threadId]!.readAt! >=
+                (threads[index].bumpedAt?.millisecondsSinceEpoch ?? 0);
+
+        return Opacity(
+          opacity: isRead ? 0.5 : 1.0,
           child: ThreadGridItem(
             thread: threads[index],
             onTap: widget.onThreadTap,
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

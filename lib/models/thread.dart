@@ -8,30 +8,29 @@ class ThreadModel extends ChangeNotifier {
 
   final Box<ThreadReadStatus> readStatusBox;
 
-  final List<ThreadReadStatus> _readStatus = [];
+  final Map<String, ThreadReadStatus> _readStatusMap = {};
 
-  List<ThreadReadStatus> get readStatus => _readStatus;
+  Map<String, ThreadReadStatus> get readStatus =>
+      Map.unmodifiable(_readStatusMap);
 
   Future<void> initialize() async {
-    _readStatus.addAll(await readStatusBox.getAllAsync());
+    final readStatusList = await readStatusBox.getAll();
+    _readStatusMap.clear();
+
+    for (final status in readStatusList) {
+      _readStatusMap[status.threadId!] = status;
+    }
+
+    notifyListeners();
   }
 
   markThreadAsRead(String threadId) async {
-    final existingStatus = _readStatus.firstWhere(
-      (status) => status.threadId == threadId,
-      orElse: () => ThreadReadStatus()..threadId = threadId,
-    );
-
+    final existingStatus = _readStatusMap[threadId] ?? ThreadReadStatus();
     existingStatus.threadId = threadId;
+    existingStatus.readAt = DateTime.now().millisecondsSinceEpoch;
+
     await readStatusBox.putAsync(existingStatus);
-
-    final hasExisting = _readStatus.any(
-      (status) => status.threadId == threadId,
-    );
-
-    if (!hasExisting) {
-      _readStatus.add(existingStatus);
-    }
+    _readStatusMap[threadId] = existingStatus;
 
     notifyListeners();
   }
