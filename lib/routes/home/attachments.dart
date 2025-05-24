@@ -5,8 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/app_bar/watcher_selector.dart';
+
 class AttachmentsTab extends StatefulWidget {
-  const AttachmentsTab({super.key});
+  const AttachmentsTab({
+    super.key,
+    required this.watchers,
+    required this.onSelectedWatcherChanged,
+  });
+
+  final List<Fragment$FullWatcher> watchers;
+  final Function(Fragment$FullWatcher?) onSelectedWatcherChanged;
 
   @override
   State<AttachmentsTab> createState() => _AttachmentsTabState();
@@ -15,8 +24,7 @@ class AttachmentsTab extends StatefulWidget {
 class _AttachmentsTabState extends State<AttachmentsTab> {
   Fragment$FullWatcher? selectedWatcher;
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildBody() {
     final selectedWatcher = Provider.of<Fragment$FullWatcher?>(context);
     if (selectedWatcher == null) {
       return Center(
@@ -69,6 +77,19 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
           },
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        WatcherSelectorAppBar(
+          watchers: widget.watchers,
+          onSelectedWatcherChanged: widget.onSelectedWatcherChanged,
+        ),
+        Expanded(child: buildBody()),
+      ],
     );
   }
 }

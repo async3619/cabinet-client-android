@@ -2,8 +2,6 @@ import 'package:after_layout/after_layout.dart';
 import 'package:cabinet/queries/watchers.graphql.dart';
 import 'package:cabinet/routes/home/statistics.dart';
 import 'package:cabinet/routes/home/threads.dart';
-import 'package:cabinet/widgets/app_bar/title.dart';
-import 'package:cabinet/widgets/app_bar/watcher_selector.dart';
 import 'package:cabinet/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -57,25 +55,21 @@ class _HomeRouteState extends State<HomeRoute>
       return const Center(child: CircularProgressIndicator());
     }
 
-    PreferredSizeWidget appBar;
     Widget body;
     switch (_selectedTabIndex) {
       case 0:
         body = StatisticsTab();
-        appBar = TitleAppBar(title: "Cabinet");
         break;
 
       case 1:
-        body = ThreadsTab();
-        appBar = WatcherSelectorAppBar(
+        body = ThreadsTab(
           watchers: _watchers!,
           onSelectedWatcherChanged: handleSelectedWatcherChanged,
         );
         break;
 
       case 2:
-        body = AttachmentsTab();
-        appBar = WatcherSelectorAppBar(
+        body = AttachmentsTab(
           watchers: _watchers!,
           onSelectedWatcherChanged: handleSelectedWatcherChanged,
         );
@@ -89,7 +83,6 @@ class _HomeRouteState extends State<HomeRoute>
       value: _selectedWatcher,
       child: Scaffold(
         drawer: AppDrawer(),
-        appBar: appBar,
         body: body,
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

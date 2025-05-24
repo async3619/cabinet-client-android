@@ -5,10 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/app_bar/watcher_selector.dart';
 import '../thread.dart';
 
 class ThreadsTab extends StatefulWidget {
-  const ThreadsTab({super.key});
+  const ThreadsTab({
+    super.key,
+    required this.watchers,
+    required this.onSelectedWatcherChanged,
+  });
+
+  final List<Fragment$FullWatcher> watchers;
+  final Function(Fragment$FullWatcher?) onSelectedWatcherChanged;
 
   @override
   State<ThreadsTab> createState() => _ThreadsTabState();
@@ -27,8 +35,7 @@ class _ThreadsTabState extends State<ThreadsTab> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget buildBody() {
     final currentWatcher = Provider.of<Fragment$FullWatcher?>(context);
     if (currentWatcher == null) {
       return Center(
@@ -83,6 +90,19 @@ class _ThreadsTabState extends State<ThreadsTab> {
           },
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        WatcherSelectorAppBar(
+          watchers: widget.watchers,
+          onSelectedWatcherChanged: widget.onSelectedWatcherChanged,
+        ),
+        Expanded(child: buildBody()),
+      ],
     );
   }
 }
