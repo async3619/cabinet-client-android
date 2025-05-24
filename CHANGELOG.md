@@ -1,3 +1,9 @@
+## [1.0.0-dev.14](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.13...v1.0.0-dev.14) (2025-05-24)
+
+### Bug Fixes 🐞
+
+* **app:** make graphql client not to use cache ([#32](https://github.com/async3619/cabinet-client-android/issues/32)) ([882a122](https://github.com/async3619/cabinet-client-android/commit/882a122ebafe7b2c98593c0cdf1bb0fb1a43cf92))
+
 ## [1.0.0-dev.13](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.12...v1.0.0-dev.13) (2025-05-24)
 
 ### Features ✨
