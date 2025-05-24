@@ -47,3 +47,5 @@ app.*.map.json
 /node_modules
 
 *.graphql.dart
+objectbox.g.dart
+objectbox-model.json

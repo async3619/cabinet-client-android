@@ -6,15 +6,25 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'entities/object_box.dart';
+import 'entities/thread_read_status.dart';
 import 'models/config.dart';
+import 'models/thread.dart';
 
 void main() async {
   await initHiveForFlutter();
-
+  WidgetsFlutterBinding.ensureInitialized();
   await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
 
+  final objectBox = await ObjectBox.create();
+
   final configModel = ConfigModel();
+  final threadModel = ThreadModel(
+    readStatusBox: objectBox.store.box<ThreadReadStatus>(),
+  );
+
   await configModel.initialize();
+  await threadModel.initialize();
 
   final app = const MyApp();
   ValueNotifier<GraphQLClient>? client;
@@ -29,6 +39,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider<ConfigModel>(create: (_) => configModel),
+        ChangeNotifierProvider<ThreadModel>(create: (_) => threadModel),
       ],
       child: client == null ? app : GraphQLProvider(client: client, child: app),
     ),
