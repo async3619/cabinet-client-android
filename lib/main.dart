@@ -6,9 +6,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'entities/attachment_watched_status.dart';
 import 'entities/object_box.dart';
 import 'entities/thread_read_status.dart';
 import 'entities/thread_scroll_position.dart';
+import 'models/attachment.dart';
 import 'models/config.dart';
 import 'models/thread.dart';
 
@@ -24,9 +26,13 @@ void main() async {
     readStatusBox: objectBox.store.box<ThreadReadStatus>(),
     scrollPositionBox: objectBox.store.box<ThreadScrollPosition>(),
   );
+  final attachmentModel = AttachmentModel(
+    watchedStatusBox: objectBox.store.box<AttachmentWatchedStatus>(),
+  );
 
   await configModel.initialize();
   await threadModel.initialize();
+  await attachmentModel.initialize();
 
   final app = const MyApp();
   ValueNotifier<GraphQLClient>? client;
@@ -48,6 +54,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider<ConfigModel>(create: (_) => configModel),
         ChangeNotifierProvider<ThreadModel>(create: (_) => threadModel),
+        ChangeNotifierProvider<AttachmentModel>(create: (_) => attachmentModel),
       ],
       child: client == null ? app : GraphQLProvider(client: client, child: app),
     ),

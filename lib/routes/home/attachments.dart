@@ -1,3 +1,4 @@
+import 'package:cabinet/models/attachment.dart';
 import 'package:cabinet/queries/watcherAttachments.graphql.dart';
 import 'package:cabinet/queries/watchers.graphql.dart';
 import 'package:cabinet/widgets/attachment_grid.dart';
@@ -42,6 +43,8 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
       fetchPolicy: FetchPolicy.networkOnly,
     );
 
+    final watchedStatus = Provider.of<AttachmentModel>(context).watchedStatus;
+
     return Query$WatcherAttachmentsQuery$Widget(
       options: options,
       builder: (result, {fetchMore, refetch}) {
@@ -69,7 +72,10 @@ class _AttachmentsTabState extends State<AttachmentsTab> {
         }
 
         return RefreshIndicator(
-          child: AttachmentGrid(attachments: attachments),
+          child: AttachmentGrid(
+            attachments: attachments,
+            watchedStatus: watchedStatus,
+          ),
           onRefresh: () async {
             if (refetch != null) {
               await refetch();
