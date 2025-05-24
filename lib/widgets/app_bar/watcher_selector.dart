@@ -9,10 +9,12 @@ class WatcherSelectorAppBar extends StatefulWidget
     super.key,
     required this.watchers,
     required this.onSelectedWatcherChanged,
+    this.actions = const [],
   });
 
   final List<Fragment$FullWatcher> watchers;
   final Function(Fragment$FullWatcher?) onSelectedWatcherChanged;
+  final List<Widget> actions;
 
   @override
   State<WatcherSelectorAppBar> createState() => _WatcherSelectorAppBarState();
@@ -30,6 +32,7 @@ class _WatcherSelectorAppBarState extends State<WatcherSelectorAppBar> {
         selectedWatcher: Provider.of<Fragment$FullWatcher>(context),
         onChanged: widget.onSelectedWatcherChanged,
       ),
+      actions: widget.actions,
     );
   }
 }
