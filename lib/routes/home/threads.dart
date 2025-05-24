@@ -1,4 +1,5 @@
 import 'package:cabinet/models/config.dart';
+import 'package:cabinet/models/thread.dart';
 import 'package:cabinet/queries/watcherThreads.graphql.dart';
 import 'package:cabinet/queries/watchers.graphql.dart';
 import 'package:cabinet/widgets/thread_grid.dart';
@@ -90,6 +91,8 @@ class _ThreadsTabState extends State<ThreadsTab> {
       fetchPolicy: FetchPolicy.networkOnly,
     );
 
+    final readStatus = Provider.of<ThreadModel>(context).readStatus;
+
     return Query$WatcherThreadsQuery$Widget(
       options: options,
       builder: (result, {fetchMore, refetch}) {
@@ -148,6 +151,7 @@ class _ThreadsTabState extends State<ThreadsTab> {
           child: ThreadGrid(
             threads: sortedThreads,
             onThreadTap: handleThreadTap,
+            readStatus: readStatus,
           ),
           onRefresh: () async {
             if (refetch != null) {
