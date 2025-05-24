@@ -4,8 +4,10 @@ import 'package:cabinet/widgets/modal/media_viewer.dart';
 import 'package:cabinet/widgets/post_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql/client.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+import '../models/thread.dart';
 import '../utils/attachment.dart';
 import '../utils/post.dart';
 import 'dialog/post.dart';
@@ -156,6 +158,24 @@ class _PostListState extends State<PostList> {
     );
   }
 
+  bool handleListViewNotification(ScrollNotification notification) {
+    if (notification is ScrollEndNotification) {
+      if (!notification.metrics.atEdge) {
+        return true;
+      }
+
+      bool isTop = notification.metrics.pixels == 0;
+      if (isTop) {
+        return true;
+      }
+
+      final threadModel = Provider.of<ThreadModel>(context, listen: false);
+      threadModel.markThreadAsRead(widget.thread.id);
+    }
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     String title =
@@ -194,25 +214,28 @@ class _PostListState extends State<PostList> {
             return const Center(child: Text("No posts available"));
           }
 
-          return ListView.builder(
-            controller: scrollController,
-            itemCount: posts!.length,
-            itemBuilder: (context, index) {
-              final post = posts![index];
+          return NotificationListener(
+            onNotification: handleListViewNotification,
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: posts!.length,
+              itemBuilder: (context, index) {
+                final post = posts![index];
 
-              return AutoScrollTag(
-                key: ValueKey(index),
-                controller: scrollController!,
-                index: index,
-                child: PostListItem(
-                  post: post,
-                  replyPostIds: replyMap[post.id] ?? [],
-                  postNoToIdMap: postNoToIdMap,
-                  onShowAttachment: handleShowAttachment,
-                  onRequestShowPost: handleRequestShowPost,
-                ),
-              );
-            },
+                return AutoScrollTag(
+                  key: ValueKey(index),
+                  controller: scrollController!,
+                  index: index,
+                  child: PostListItem(
+                    post: post,
+                    replyPostIds: replyMap[post.id] ?? [],
+                    postNoToIdMap: postNoToIdMap,
+                    onShowAttachment: handleShowAttachment,
+                    onRequestShowPost: handleRequestShowPost,
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
