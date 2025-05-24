@@ -35,7 +35,7 @@ class _ThreadGridState extends State<ThreadGrid> {
         final threadId = threads[index].id;
         final isRead =
             readStatus[threadId] != null &&
-            readStatus[threadId]!.readAt! >=
+            (readStatus[threadId]!.readAt ?? -1) >=
                 (threads[index].bumpedAt?.millisecondsSinceEpoch ?? 0);
 
         return Opacity(
