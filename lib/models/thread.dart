@@ -14,7 +14,7 @@ class ThreadModel extends ChangeNotifier {
       Map.unmodifiable(_readStatusMap);
 
   Future<void> initialize() async {
-    final readStatusList = await readStatusBox.getAll();
+    final readStatusList = await readStatusBox.getAllAsync();
     _readStatusMap.clear();
 
     for (final status in readStatusList) {
