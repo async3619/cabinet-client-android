@@ -31,7 +31,13 @@ void main() async {
   if (configModel.serverUrl != null) {
     final HttpLink httpLink = HttpLink(configModel.serverUrl!);
     client = ValueNotifier(
-      GraphQLClient(link: httpLink, cache: GraphQLCache(store: HiveStore())),
+      GraphQLClient(
+        link: httpLink,
+        cache: GraphQLCache(store: HiveStore()),
+        defaultPolicies: DefaultPolicies(
+          query: Policies(fetch: FetchPolicy.networkOnly),
+        ),
+      ),
     );
   }
 
