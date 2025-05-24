@@ -46,7 +46,14 @@ class _PostListState extends State<PostList> {
       return posts;
     });
 
-    scrollController = AutoScrollController();
+    scrollController = AutoScrollController(
+      initialScrollOffset:
+          Provider.of<ThreadModel>(
+            context,
+            listen: false,
+          ).scrollPosition[widget.thread.id]?.scrollPosition ??
+          0.0,
+    );
   }
 
   Future<List<Fragment$FullPost>> fetchPostList() async {
@@ -160,6 +167,12 @@ class _PostListState extends State<PostList> {
 
   bool handleListViewNotification(ScrollNotification notification) {
     if (notification is ScrollEndNotification) {
+      final threadModel = Provider.of<ThreadModel>(context, listen: false);
+      threadModel.registerScrollPosition(
+        widget.thread.id,
+        notification.metrics.pixels,
+      );
+
       if (!notification.metrics.atEdge) {
         return true;
       }
@@ -169,7 +182,6 @@ class _PostListState extends State<PostList> {
         return true;
       }
 
-      final threadModel = Provider.of<ThreadModel>(context, listen: false);
       threadModel.markThreadAsRead(widget.thread.id);
     }
 

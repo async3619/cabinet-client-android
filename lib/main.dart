@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'entities/object_box.dart';
 import 'entities/thread_read_status.dart';
+import 'entities/thread_scroll_position.dart';
 import 'models/config.dart';
 import 'models/thread.dart';
 
@@ -21,6 +22,7 @@ void main() async {
   final configModel = ConfigModel();
   final threadModel = ThreadModel(
     readStatusBox: objectBox.store.box<ThreadReadStatus>(),
+    scrollPositionBox: objectBox.store.box<ThreadScrollPosition>(),
   );
 
   await configModel.initialize();
