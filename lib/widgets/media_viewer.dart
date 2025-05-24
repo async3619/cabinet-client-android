@@ -3,7 +3,10 @@ import 'package:cabinet/utils/attachment.dart';
 import 'package:cabinet/widgets/video_progress.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+
+import '../models/attachment.dart';
 
 class MediaViewer extends StatefulWidget {
   const MediaViewer({
@@ -61,7 +64,11 @@ class _MediaViewerState extends State<MediaViewer> {
       return;
     }
 
-    debugPrint(getAttachmentUrl(widget.attachment));
+    Provider.of<AttachmentModel>(
+      context,
+      listen: false,
+    ).markAttachmentAsWatched(widget.attachment.id);
+
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(getAttachmentUrl(widget.attachment)),
     );
