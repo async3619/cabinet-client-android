@@ -12,7 +12,6 @@ fragment FullAttachment on Attachment {
   timestamp
   thumbnailWidth
   thumbnailHeight
-  thumbnailFilePath
   createdAt
 }
 
