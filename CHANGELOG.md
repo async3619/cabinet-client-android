@@ -1,3 +1,10 @@
+## [1.0.0-dev.17](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.16...v1.0.0-dev.17) (2025-05-27)
+
+### Bug Fixes 🐞
+
+* **graphql:** remove redundant attachment fragment field `thumbnailFilePath` ([070a550](https://github.com/async3619/cabinet-client-android/commit/070a5500b20af3255ab1f92d82af5793992f7184))
+* **graphql:** remove redundant attachment fragment field `thumbnailFilePath` ([#38](https://github.com/async3619/cabinet-client-android/issues/38)) ([452fe92](https://github.com/async3619/cabinet-client-android/commit/452fe928f59555ffdc7743b511908f9d423e42e8))
+
 ## [1.0.0-dev.16](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.15...v1.0.0-dev.16) (2025-05-24)
 
 ### Features ✨
