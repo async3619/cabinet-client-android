@@ -1,3 +1,17 @@
+## [1.0.0-dev.18](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.17...v1.0.0-dev.18) (2025-06-01)
+
+### Features ✨
+
+* **attachments:** make scroll of grid list follow to user currently watching item ([#42](https://github.com/async3619/cabinet-client-android/issues/42)) ([db67cd8](https://github.com/async3619/cabinet-client-android/commit/db67cd823389d3df346cfc53edde998807aa4b13))
+
+### Bug Fixes 🐞
+
+* **attachments:** fix a bug that non-video attachments was not marked as read ([#41](https://github.com/async3619/cabinet-client-android/issues/41)) ([a17e7f3](https://github.com/async3619/cabinet-client-android/commit/a17e7f3172dd63035634a0fd185263fcf2506e7b))
+
+### Internal 🧰
+
+* **media:** make media viewer modal to use lazy build to enhance performance ([#44](https://github.com/async3619/cabinet-client-android/issues/44)) ([1e38a84](https://github.com/async3619/cabinet-client-android/commit/1e38a84aa7f417c249ac5a31aedd2990712fbc97))
+
 ## [1.0.0-dev.17](https://github.com/async3619/cabinet-client-android/compare/v1.0.0-dev.16...v1.0.0-dev.17) (2025-05-27)
 
 ### Bug Fixes 🐞
