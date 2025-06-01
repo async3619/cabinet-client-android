@@ -124,13 +124,12 @@ class MediaViewerModal extends ModalRoute {
             ],
           ),
           Expanded(
-            child: PageView(
+            child: PageView.builder(
               controller: pageController,
               onPageChanged: handlePageChanged,
-              children: [
-                for (var index = 0; index < attachments.length; index++)
-                  buildViewer(context, attachments[index], index),
-              ],
+              itemBuilder: (context, index) {
+                return buildViewer(context, attachments[index], index);
+              },
             ),
           ),
         ],
