@@ -48,6 +48,11 @@ class _MediaViewerState extends State<MediaViewer> {
   }
 
   handleInitialize() {
+    Provider.of<AttachmentModel>(
+      context,
+      listen: false,
+    ).markAttachmentAsWatched(widget.attachment.id);
+
     if (!widget.attachment.isVideo) {
       return;
     }
@@ -63,11 +68,6 @@ class _MediaViewerState extends State<MediaViewer> {
 
       return;
     }
-
-    Provider.of<AttachmentModel>(
-      context,
-      listen: false,
-    ).markAttachmentAsWatched(widget.attachment.id);
 
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(getAttachmentUrl(widget.attachment)),
